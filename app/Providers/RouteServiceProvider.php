@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +18,15 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/';
+
+    public static function home(){
+        if(Auth::user()->hasRole('super-admin')){
+            return '/admin';
+        }else {
+             return '/';
+        }
+    }
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
@@ -35,6 +44,13 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
+
+             Route::middleware('web')
+                 ->prefix('admin')
+                 ->as('admin.')
+                ->group(base_path('routes/admin.php'));
+
+
         });
     }
 

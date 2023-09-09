@@ -84,6 +84,13 @@ return [
 
     'locale' => 'en',
 
+    'available_locales' => [
+        'en',
+        'ar',
+    ],
+
+
+
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -186,6 +193,8 @@ return [
          * Package Service Providers...
          */
 
+        Unlimited\Repository\RepositoryServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -194,6 +203,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\RepositoryServiceProvider::class,
 
     ],
 
