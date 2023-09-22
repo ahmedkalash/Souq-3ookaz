@@ -5,6 +5,7 @@ namespace App\Http\Repositories\Traits;
 use App\Http\Requests\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 
 trait AuthenticateUserTrait
 {
@@ -18,13 +19,15 @@ trait AuthenticateUserTrait
 
         app()->call([$this,'beforeLoginAttemptHook']);
 
-        if($this->attempt($credentials, $request) ){
+        if($this->attempt($credentials, $request, $this->rememberMe($request)) ){
             app()->call([$this,'beforeSendingSuccessfulLoginResponseHook']);
             return $this->successfulLoginResponse();
         }else {
             app()->call([$this,'beforeSendingFailedLoginResponseHook']);
             return  $this->failedLoginResponse();
         }
+
+
 
     }
 
@@ -34,10 +37,14 @@ trait AuthenticateUserTrait
         return $request->only(['email','password']);
     }
 
-    public function attempt(array $credentials, LoginRequest $request)
+    public function attempt(array $credentials, LoginRequest $request, bool $rememberMe)
     {
-        return Auth::attempt($credentials,$request->remember_me??false);
+        return Auth::attempt($credentials, $rememberMe);
+    }
 
+    public function rememberMe(LoginRequest $request )
+    {
+        return (bool)$request->remember_me;
     }
 
     public function successfulLoginResponse()

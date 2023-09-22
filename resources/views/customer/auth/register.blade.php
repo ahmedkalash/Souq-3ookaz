@@ -25,6 +25,9 @@
                         </div>
 
 
+                        @error('registration_failed')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                         <div class="input-box">
                             <form class="row g-4" method="post" action="{{route('customer.register')}}">
                                 @csrf

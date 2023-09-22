@@ -3,7 +3,7 @@
 namespace App\Http\Repositories;
 
 use Unlimited\Repository\Services\BaseEloquentService;
-use App\Http\interfaces\TestInterface;
+use App\Http\Interfaces\TestInterface;
 
 class TestRepository extends BaseEloquentService implements TestInterface
 {
@@ -11,7 +11,7 @@ class TestRepository extends BaseEloquentService implements TestInterface
 
     public function __construct()
     {
-        $this->instance = $this->getNewInstance();
+        //$this->instance = $this->getNewInstance();
     }
 
     public function index()

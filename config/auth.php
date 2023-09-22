@@ -108,4 +108,7 @@ return [
 
     'password_timeout' => 10800,
 
+
+    'supported_auth_providers'=>['google']
+
 ];

@@ -92,14 +92,14 @@
                         <div class="log-in-button">
                             <ul>
                                 <li>
-                                    <a href="https://www.google.com/" class="btn google-button w-100">
-                                        <img src="{{asset('frontend')}}/assets/images/inner-page/google.png" class="blur-up lazyload"
+                                    <a href="{{route('customer.redirectToProvider','google')}}" class="btn google-button w-100">
+                                        <img src="{{asset('frontend/assets/images/inner-page/google.png')}}" class="blur-up lazyload"
                                              alt=""> Log In with Google
                                     </a>
                                 </li>
                                 <li>
                                     <a href="https://www.facebook.com/" class="btn google-button w-100">
-                                        <img src="{{asset('frontend')}}/assets/images/inner-page/facebook.png" class="blur-up lazyload"
+                                        <img src="{{asset('frontend/assets/images/inner-page/facebook.png')}}" class="blur-up lazyload"
                                              alt=""> Log In with Facebook
                                     </a>
                                 </li>

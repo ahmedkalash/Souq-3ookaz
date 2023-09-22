@@ -17,13 +17,15 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        $admin = User::query()->create([
-            'first_name'=>'ahmed',
-            'name_name'=>'kalash',
-            'email'=>'kalash@admin.com',
-            'password'=>Hash::make('ahmed')
-        ]);
+        \DB::transaction(function (){
+            $admin = User::query()->create([
+                'first_name'=>'ahmed',
+                'last_name'=>'kalash',
+                'email'=>'kalash@admin.com',
+                'password'=>Hash::make('ahmed')
+            ]);
+            $admin->assignRole('super-admin');
+        });
 
-        $admin->assignRole('super-admin');
     }
 }

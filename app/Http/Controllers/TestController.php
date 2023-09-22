@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,6 +14,14 @@ class TestController extends Controller
     {
         $this->testInterface = $testInterface;
     }
+
+    public function test($q, Request $request , $b)
+    {
+         dd($q, $b);
+    }
+
+
+
 
     /**
      * Display a listing of the resource.

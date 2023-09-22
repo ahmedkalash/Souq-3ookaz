@@ -68,7 +68,7 @@ trait RegistersUserTrait
     }
     public function failedRegistrationResponse()
     {
-         return 'Registration Failed'; //todo  implement this function
+        return redirect()->route('customer.showRegistrationPage')->withErrors(['registration_failed'=>'Registration failed please try again']);
     }
 
     public function beforeRegistrationTransactionStartHook()
