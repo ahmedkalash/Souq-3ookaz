@@ -16,20 +16,47 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 */
 
 
+
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'as'=>'customer.',
-    'middleware'=>  [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' , 'guest']
+    'middleware'=>  [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
 ], function (){
-    Route::get('/register',[\App\Http\Controllers\Web\Customer\Auth\RegisterController::class, 'showRegistrationPage'])->name('showRegistrationPage');
-    Route::post('/register',[\App\Http\Controllers\Web\Customer\Auth\RegisterController::class, 'register'])->name('register');
-    Route::get('/login',[\App\Http\Controllers\Web\Customer\Auth\LoginController::class, 'showLoginPage'])->name('showLoginPage');
-    Route::post('/login',[\App\Http\Controllers\Web\Customer\Auth\LoginController::class, 'authenticate'])->name('authenticate');
-    Route::get('/auth/{provider}/redirect',[\App\Http\Controllers\Web\Customer\Auth\SocialAuthController::class,'redirectToProvider'])
-        ->name('redirectToProvider')->whereIn('provider',\Illuminate\Support\Facades\Config::get('auth.supported_auth_providers'));
-    Route::get('/auth/{provider}/callback',[\App\Http\Controllers\Web\Customer\Auth\SocialAuthController::class,'handelProviderCallback'])->name('handelProviderCallback');
+
+    Route::group([
+        'middleware' => [ 'guest']
+    ], function(){
+
+        Route::get('/register',[\App\Http\Controllers\Web\Customer\Auth\RegisterController::class, 'showRegistrationPage'])->name('showRegistrationPage');
+        Route::post('/register',[\App\Http\Controllers\Web\Customer\Auth\RegisterController::class, 'register'])->name('register');
+        Route::get('/login',[\App\Http\Controllers\Web\Customer\Auth\LoginController::class, 'showLoginPage'])->name('showLoginPage');
+        Route::post('/login',[\App\Http\Controllers\Web\Customer\Auth\LoginController::class, 'authenticate'])->name('authenticate');
+        Route::get('/auth/{provider}/redirect',[\App\Http\Controllers\Web\Customer\Auth\SocialAuthController::class,'redirectToProvider'])
+            ->name('redirectToProvider')->whereIn('provider',\Illuminate\Support\Facades\Config::get('auth.supported_auth_providers'));
+        Route::get('/auth/{provider}/callback',[\App\Http\Controllers\Web\Customer\Auth\SocialAuthController::class,'handelProviderCallback'])->name('handelProviderCallback');
+
+    });
+
+    Route::group([
+        'middleware' => ['auth']
+    ], function(){
+
+         Route::get('/email-verify/resend-verification-code',[\App\Http\Controllers\Web\Customer\Auth\RegisterController::class, 'reSendEmailVerificationNotification'])->name('reSendEmailVerificationNotification');
+         Route::get('/email-verify/{verification_code}',[\App\Http\Controllers\Web\Customer\Auth\RegisterController::class, 'verify'])->name('verify');
+
+    });
+
+
+
+
+    Route::post('/logout',[\App\Http\Controllers\Web\Customer\Auth\LoginController::class, 'logout'])->name('logout');
+
+
+
+
 
 });
+
 
 
 
@@ -56,14 +83,30 @@ Route::group([
 
 Route::group([
         'prefix' => LaravelLocalization::setLocale(),
-        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
     ], function(){
 
      Route::get('/', function () {
         return view('customer.welcome');
      })->name('index');
 
-     Route::get('/test/{a}/{b}',[\App\Http\Controllers\TestController::class, 'test'])->name('test');
+     Route::get('/test',[\App\Http\Controllers\TestController::class, 'test'])->name('test');
      Route::post('to')->name('to');
 
 });
+
+
+
+
+Route::group([
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
+    ], function(){
+
+
+
+     Route::get('/test',[\App\Http\Controllers\TestController::class, 'test'])->name('test');
+     Route::post('to')->name('to');
+
+});
+

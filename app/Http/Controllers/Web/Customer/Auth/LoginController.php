@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Customer\Auth;;
 use App\Http\Controllers\Controller;
 use App\Http\Interfaces\Web\Customer\Auth\LoginInterface;
 use App\Http\Requests\LoginRequest;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -24,6 +25,13 @@ class LoginController extends Controller
 
     public function authenticate(LoginRequest $request){
         return  $this->loginInterface ->authenticate($request);
+    }
+
+    public function logout(Request $request)
+    {
+        return $this->loginInterface->logout($request);
+
+
     }
 
 

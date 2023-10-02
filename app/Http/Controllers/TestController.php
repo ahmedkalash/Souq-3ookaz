@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Repositories\Web\Customer\Auth\RegisterRepository;
+use App\Mail\EmailVerificationMail;
 use Illuminate\Http\Request;
 use App\Http\Interfaces\TestInterface;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class TestController extends Controller
 {
@@ -15,9 +20,11 @@ class TestController extends Controller
         $this->testInterface = $testInterface;
     }
 
-    public function test($q, Request $request , $b)
+    public function test( )
     {
-         dd($q, $b);
+        (new RegisterRepository())->sendEmailVerificationNotification(Auth::user());
+
+       return (new EmailVerificationMail(Auth::user(), session('verification_code')['code']));
     }
 
 

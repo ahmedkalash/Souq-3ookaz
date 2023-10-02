@@ -3,12 +3,16 @@
 namespace App\Http\Repositories\Traits;
 
 use App\Http\Requests\Web\Customer\Auth\RegisterRequest;
+use App\Mail\EmailVerificationMail;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Console\View\Components\Alert;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 trait RegistersUserTrait
 {
@@ -19,7 +23,6 @@ trait RegistersUserTrait
 
     public function register(RegisterRequest $request){
 
-
         app()->call([$this,'beforeRegistrationTransactionStartHook']);
         try {
             DB::transaction(function () use ($request){
@@ -29,13 +32,12 @@ trait RegistersUserTrait
                 $user = $this->create($request);
                 $this->assignRoles($user);
                 $this->login($user);
-
+                $this->sendEmailVerificationNotification($user);
                 app()->call([$this,'beforeRegistrationTransactionEndsHook']);
 
             });
         }catch (\Throwable){
               return app()->call([$this,'failedRegistrationResponse']);
-
         }
 
         app()->call([$this,'afterRegistrationTransactionEndsHook']);
@@ -68,7 +70,7 @@ trait RegistersUserTrait
     }
     public function failedRegistrationResponse()
     {
-        return redirect()->route('customer.showRegistrationPage')->withErrors(['registration_failed'=>'Registration failed please try again']);
+        return redirect()->route('customer.showRegistrationPage')->withErrors(['registration_failed'=>  ('Registration failed please try again') ]);
     }
 
     public function beforeRegistrationTransactionStartHook()
@@ -90,5 +92,44 @@ trait RegistersUserTrait
     {
         //
     }
+
+
+
+    public function sendEmailVerificationNotification(User $user)
+    {
+        Session::forget('verification_code');
+        $verification_code = Str::random(10);
+        Session::put('verification_code',[
+            'code'=>$verification_code,
+            'exp'=> Carbon::now()->addMinutes(15)
+        ]);
+        Mail::to($user->email)->send(new EmailVerificationMail($user, $verification_code));
+    }
+
+    public function reSendEmailVerificationNotification(User $user)
+    {
+        $this->sendEmailVerificationNotification($user);
+        return 'An email was sent to your email. Check your email.';
+    }
+
+
+
+    public function verify(User $user, string $verification_code){
+        $stored_verification_code = Session::get('verification_code');
+        if( isset($stored_verification_code) && ($stored_verification_code['code'] == $verification_code) && ($stored_verification_code['exp'] > now()) ){
+            Session::forget('verification_code');
+            $user->email_verified_at = now();
+            $user->save();
+            return redirect(RouteServiceProvider::home());
+        }else{
+            return  ('Invalid code please try again');
+        }
+
+    }
+
+
+
+
+
 
 }
