@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Repositories\Traits;
+namespace App\Http\Traits;
 
 use App\Http\Requests\Web\Customer\Auth\RegisterRequest;
 use App\Mail\EmailVerificationMail;
@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -36,8 +37,9 @@ trait RegistersUserTrait
                 app()->call([$this,'beforeRegistrationTransactionEndsHook']);
 
             });
-        }catch (\Throwable){
-              return app()->call([$this,'failedRegistrationResponse']);
+        }catch (\Throwable $e){
+            Log::error($e->getMessage(), $e->getTrace());
+            return app()->call([$this,'failedRegistrationResponse']);
         }
 
         app()->call([$this,'afterRegistrationTransactionEndsHook']);
@@ -113,7 +115,6 @@ trait RegistersUserTrait
     }
 
 
-
     public function verify(User $user, string $verification_code){
         $stored_verification_code = Session::get('verification_code');
         if( isset($stored_verification_code) && ($stored_verification_code['code'] == $verification_code) && ($stored_verification_code['exp'] > now()) ){
@@ -122,7 +123,7 @@ trait RegistersUserTrait
             $user->save();
             return redirect(RouteServiceProvider::home());
         }else{
-            return  ('Invalid code please try again');
+            return  ('Invalid verification code please try again');
         }
 
     }

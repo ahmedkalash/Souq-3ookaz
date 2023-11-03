@@ -40,9 +40,6 @@ class RegisterController extends Controller
 
     public function verify(string $verification_code){
         $user = Auth::user();
-//        dump($verification_code);
-//        dump(Session::get('verification_code'));
-
         return $this->registerInterface->verify($user, $verification_code);
     }
 

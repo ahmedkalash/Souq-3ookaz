@@ -10,9 +10,8 @@ interface LoginInterface
 
     public function showLoginPage();
 
+    public function authenticate(Request $request);
 
-    public function authenticate(LoginRequest $request);
-
-    public function logout( Request $request);
+    public function logout(Request $request);
 
 }

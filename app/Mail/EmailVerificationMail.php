@@ -21,7 +21,7 @@ class EmailVerificationMail extends Mailable
      *
      * @return void
      */
-    public function __construct(public User $user,public  string $verification_code)
+    public function __construct(public User $user, public string $verification_code)
     {
         //
     }

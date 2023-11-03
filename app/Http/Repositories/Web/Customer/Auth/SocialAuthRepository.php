@@ -2,23 +2,32 @@
 
 namespace App\Http\Repositories\Web\Customer\Auth;
 use App\Http\Interfaces\Web\Customer\Auth\SocialAuthInterface;
+use App\Http\Traits\ThrottleFailedLoginsTrait;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
-
+use Log;
 class SocialAuthRepository implements SocialAuthInterface
 {
+    use ThrottleFailedLoginsTrait;
+
     public function redirectToProvider(Request $request, $provider){
         return Socialite::driver($provider)->redirect();
     }
 
 
     public function handelProviderCallback(Request $request, $provider){
+
+        if($this->checkIfUserIsTemporaryBlocked($request)){
+            return $this->tooManyFailedLoginAttemptsResponse($request);
+        }
+
        if($provider == 'google'){
            return $this->handelGoogleCallback($request);
        }
@@ -30,6 +39,7 @@ class SocialAuthRepository implements SocialAuthInterface
         try {
             $provider_user = Socialite::driver('google')->user();
         }catch (\Throwable $e){
+            Log::error( $e->getMessage(), $e->getTrace());
             return redirect()->route('customer.showLoginPage')->withErrors(['login_failed'=>"Something Went wrong. Please try again."]);
         }
 
@@ -68,5 +78,14 @@ class SocialAuthRepository implements SocialAuthInterface
 
         return redirect(RouteServiceProvider::home());
     }
+    public function tooManyFailedLoginAttemptsResponse(Request $request){
+
+        return  redirect()->route('customer.showLoginPage')
+            ->withErrors(['too_many_failed_login_attempts'=>'Too many failed login attempts'])
+            ->with('lockup_minutes', round($this->availableAfter($request) / 60.0 ,2))
+            ->setStatusCode(Response::HTTP_TOO_MANY_REQUESTS);
+
+    }
+
 
 }

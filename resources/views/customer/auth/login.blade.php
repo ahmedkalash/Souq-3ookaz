@@ -38,7 +38,14 @@
                         <div class="input-box">
 
                             @error('login_failed')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                            @error('too_many_failed_login_attempts')
+                                <div class="alert alert-danger">
+                                    {{ $message }} !<br>
+                                    You will be able to try again after {{session('lockup_minutes')}} Minuts.
+                                </div>
+
                             @enderror
 
                             <form class="row g-4" method="post" action="{{route('customer.authenticate')}}">

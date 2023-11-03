@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\Web\Customer\Auth\RegisterRepository;
 use App\Mail\EmailVerificationMail;
+use App\Models\User;
+use Illuminate\Cache\RateLimiter;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Http\Request;
 use App\Http\Interfaces\TestInterface;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
@@ -15,16 +22,32 @@ class TestController extends Controller
 {
     public $testInterface;
 
-    public function __construct(TestInterface $testInterface)
+
+    public function __construct(TestInterface $testInterface , public RateLimiter $rateLimiter)
     {
         $this->testInterface = $testInterface;
     }
 
     public function test( )
     {
-        (new RegisterRepository())->sendEmailVerificationNotification(Auth::user());
 
-       return (new EmailVerificationMail(Auth::user(), session('verification_code')['code']));
+        $this->rateLimiter->for('test', function (){
+            return Limit::perMinutes(1,2)->by(1);
+        });
+        dump($this->rateLimiter->hit(1,60));
+        dump($this->rateLimiter->availableIn(1));
+        dump($this->    rateLimiter);
+
+
+
+    //        DB::transaction(function (){
+    //            User::create([
+    //                'first_name'=>'sghdfgh',
+    //                'email'=>'Hkyseduma@mailinator.com123',
+    //
+    //            ]);
+    //        });
+
     }
 
 
