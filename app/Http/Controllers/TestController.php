@@ -17,26 +17,24 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TestController extends Controller
 {
     public $testInterface;
-
 
     public function __construct(TestInterface $testInterface , public RateLimiter $rateLimiter)
     {
         $this->testInterface = $testInterface;
     }
 
-    public function test( )
+    public function test( Request $request )
     {
 
-        $this->rateLimiter->for('test', function (){
-            return Limit::perMinutes(1,2)->by(1);
-        });
-        dump($this->rateLimiter->hit(1,60));
-        dump($this->rateLimiter->availableIn(1));
-        dump($this->    rateLimiter);
+        return (new App\Mail\PasswordResetMail( User::first(),'fgsdfgfg4s5dfg654df4g5df4g5'))->render();
+
+//        return view('customer.test');
+
 
 
 

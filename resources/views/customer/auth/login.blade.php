@@ -81,7 +81,7 @@
                                         @error('remember_me')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
-                                        <a href="forgot.html" class="forgot-password">Forgot Password?</a>
+                                        <a href="{{route('customer.showForgetPasswordPage')}}" class="forgot-password">Forgot Password?</a>
                                     </div>
                                 </div>
 

@@ -577,4 +577,4 @@
 
 
 
-@include('customer.layouts.includes.scripts')
+

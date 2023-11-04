@@ -11,4 +11,3 @@
 
 
 
-@include('customer.layouts.includes.style')

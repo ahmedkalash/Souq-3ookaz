@@ -10,9 +10,8 @@ use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Route;
 
-class EmailVerificationMail extends Mailable
+class PasswordResetMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -21,7 +20,7 @@ class EmailVerificationMail extends Mailable
      *
      * @return void
      */
-    public function __construct(public User $user, public string $verification_code)
+    public function __construct(public User $user,public string $password_reset_code)
     {
         //
     }
@@ -31,15 +30,13 @@ class EmailVerificationMail extends Mailable
      *
      * @return \Illuminate\Mail\Mailables\Envelope
      */
-
     public function envelope()
     {
         return new Envelope(
-            from:   new Address('email-verification@souq3okaz.com',  ('Souq 3okaz | Email Verification') ),
-            subject:  ('Email Verification') ,
+            from:   new Address('password-reset@souq3okaz.com',  ('Souq 3okaz | Password Reset') ),
+            subject:  ('Password Reset') ,
         );
     }
-
 
     /**
      * Get the message content definition.
@@ -49,9 +46,8 @@ class EmailVerificationMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'customer.emails.verification',
+            view: 'customer.emails.password-reset',
         );
-
     }
 
     /**
@@ -63,5 +59,4 @@ class EmailVerificationMail extends Mailable
     {
         return [];
     }
-
 }
