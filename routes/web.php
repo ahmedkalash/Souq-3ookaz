@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Web\Customer\Auth\RestPasswordController;
+use App\Http\Controllers\Web\Customer\Auth\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -45,13 +45,13 @@ Route::group([
         Route::get('/auth/{provider}/callback',[\App\Http\Controllers\Web\Customer\Auth\SocialAuthController::class,'handelProviderCallback'])->name('handelProviderCallback');
 
         // password rest
-        Route::get('/forget-password',[RestPasswordController::class,'showForgetPasswordPage'])->name('showForgetPasswordPage');
-        Route::post('/send-password-reset-email',[RestPasswordController::class,'sendPasswordResetNotification'])
+        Route::get('/forget-password',[ResetPasswordController::class,'showForgetPasswordPage'])->name('showForgetPasswordPage');
+        Route::post('/send-password-reset-email',[ResetPasswordController::class,'sendPasswordResetNotification'])
             ->name('sendPasswordResetEmail')->middleware(['throttle:5,1']);
-        Route::get('/verify-password-reset-code/{password_reset_code}',[RestPasswordController::class,'verifyPasswordResetCode'])
+        Route::get('/verify-password-reset-code/{password_reset_code}',[ResetPasswordController::class,'verifyPasswordResetCode'])
             ->name('verifyPasswordResetCode')->middleware(['throttle:5,1']);
-        Route::get('/password-reset',[RestPasswordController::class,'showPasswordResetPage'])->name('showPasswordResetPage');
-        Route::post('/password-reset',[RestPasswordController::class,'passwordReset'])
+        Route::get('/password-reset',[ResetPasswordController::class,'showPasswordResetPage'])->name('showPasswordResetPage');
+        Route::post('/password-reset',[ResetPasswordController::class,'passwordReset'])
             ->name('passwordReset')->middleware(['throttle:5,1']);
 
 

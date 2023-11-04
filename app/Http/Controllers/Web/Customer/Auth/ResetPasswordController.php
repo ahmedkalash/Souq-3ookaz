@@ -18,7 +18,7 @@ use Illuminate\Support\Str;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 use function Symfony\Component\String\b;
 
-class RestPasswordController extends Controller
+class ResetPasswordController extends Controller
 {
     public $resetPasswordInterface;
 
