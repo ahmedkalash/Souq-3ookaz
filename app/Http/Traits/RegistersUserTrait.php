@@ -17,6 +17,8 @@ use Illuminate\Support\Str;
 
 trait RegistersUserTrait
 {
+    use VerifyEmailTrait;
+
     public function showRegistrationPage()
     {
         return view('customer.auth.register');
@@ -97,36 +99,7 @@ trait RegistersUserTrait
 
 
 
-    public function sendEmailVerificationNotification(User $user)
-    {
-        Session::forget('verification_code');
-        $verification_code = Str::random(10);
-        Session::put('verification_code',[
-            'code'=>$verification_code,
-            'exp'=> Carbon::now()->addMinutes(15)
-        ]);
-        Mail::to($user->email)->send(new EmailVerificationMail($user, $verification_code));
-    }
 
-    public function reSendEmailVerificationNotification(User $user)
-    {
-        $this->sendEmailVerificationNotification($user);
-        return 'An email was sent to your email. Check your email.';
-    }
-
-
-    public function verify(User $user, string $verification_code){
-        $stored_verification_code = Session::get('verification_code');
-        if( isset($stored_verification_code) && ($stored_verification_code['code'] == $verification_code) && ($stored_verification_code['exp'] > now()) ){
-            Session::forget('verification_code');
-            $user->email_verified_at = now();
-            $user->save();
-            return redirect(RouteServiceProvider::home());
-        }else{
-            return  ('Invalid verification code please try again');
-        }
-
-    }
 
 
 

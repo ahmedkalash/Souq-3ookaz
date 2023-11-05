@@ -62,8 +62,10 @@ Route::group([
     ], function(){
 
         // email verify
-         Route::get('/email-verify/resend-verification-code',[\App\Http\Controllers\Web\Customer\Auth\RegisterController::class, 'reSendEmailVerificationNotification'])->name('reSendEmailVerificationNotification');
-         Route::get('/email-verify/{verification_code}',[\App\Http\Controllers\Web\Customer\Auth\RegisterController::class, 'verify'])->name('verify');
+         Route::get('/email-verify/resend-verification-code',[\App\Http\Controllers\Web\Customer\Auth\RegisterController::class, 'reSendEmailVerificationNotification'])
+             ->name('reSendEmailVerificationNotification')->middleware(['throttle:1,1']);
+         Route::get('/email-verify/{verification_code}',[\App\Http\Controllers\Web\Customer\Auth\RegisterController::class, 'verify'])
+             ->name('verify')->middleware(['throttle:3,1']);
 
     });
 

@@ -9,4 +9,5 @@ class RegisterRepository  implements RegisterInterface
     use RegistersUserTrait;
 
 
+
 }
