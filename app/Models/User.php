@@ -4,6 +4,8 @@ namespace App\Models;
 
 
 use App\Mail\EmailVerificationMail;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasName;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +15,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Mail;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable  implements MustVerifyEmail
+class User extends Authenticatable  implements MustVerifyEmail, FilamentUser, HasName
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
@@ -65,5 +67,16 @@ class User extends Authenticatable  implements MustVerifyEmail
     function sendEmailVerificationNotification()
     {
         //
+    }
+
+
+    public function canAccessFilament(): bool
+    {
+       return $this->hasAllRoles(['super-admin']);
+    }
+
+    public function getFilamentName(): string
+    {
+        return $this->fullName;
     }
 }

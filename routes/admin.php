@@ -41,10 +41,6 @@ Route::group([
     'middleware'=> 'role:super-admin'
 ], function (){
 
-    Route::get('/', function () {
-        return view('admin.welcome');
-    });
-
 
 
 

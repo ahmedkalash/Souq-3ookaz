@@ -31,6 +31,7 @@ class TestController extends Controller
     public function test( Request $request )
     {
 
+
         return (new App\Mail\PasswordResetMail( User::first(),'fgsdfgfg4s5dfg654df4g5df4g5'))->render();
 
 //        return view('customer.test');
