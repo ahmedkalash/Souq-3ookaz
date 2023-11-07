@@ -26,6 +26,7 @@
 4. Run `php artisan migrate --seed`.
 5. Run `php artisan key:generate`.
 6. Run `php artisan storage:link`.
+7. Run `php artisan serve`.
 
 
 
@@ -46,7 +47,7 @@ Enlisted below are all the major functions supported by the online shopping syst
     ▪ Setup filament admin panel
     ▪ Website settings managment
 
-### Next Step
+### Next steps
     ▪ Handling upploaded files and images
     ▪ Static text translation
 

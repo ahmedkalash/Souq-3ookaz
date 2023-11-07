@@ -1,10 +1,9 @@
 <?php
 
 
-
-
 if(!function_exists('translate')){
-    function translate(string $value){
+    function translate(?string $value): ?string
+    {
         return $value;
     }
 }
@@ -19,7 +18,7 @@ if(!function_exists('customer_home_page_url')){
 
 if(!function_exists('admin_home_page_url')){
     function admin_home_page_url():string{
-        return '/adminq';
+        return '/admin';
     }
 }
 
