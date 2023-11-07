@@ -61,7 +61,7 @@ return [
     |
     */
 
-    'home_url' => customerHomePageUrl(),
+    'home_url' => customer_home_page_url(),
 
     /*
     |--------------------------------------------------------------------------

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
+use Spatie\LaravelSettings\Settings;
 
 class TestController extends Controller
 {
@@ -32,7 +33,12 @@ class TestController extends Controller
     {
 
 
-        return (new App\Mail\PasswordResetMail( User::first(),'fgsdfgfg4s5dfg654df4g5df4g5'))->render();
+          dd(settings(App\Settings\GeneralSettings::class)->site_name);
+//          settings('general')->site_name;
+
+
+
+       /// return (new App\Mail\PasswordResetMail( User::first(),'fgsdfgfg4s5dfg654df4g5df4g5'))->render();
 
 //        return view('customer.test');
 

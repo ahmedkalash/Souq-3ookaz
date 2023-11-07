@@ -42,11 +42,12 @@ Enlisted below are all the major functions supported by the online shopping syst
     ▪ Prevent too many fiald login attempts
     ▪ Authentication with google
     
-
-### Next Step
+### Admin
     ▪ Setup filament admin panel
     ▪ Website settings managment
-    ▪ Static text translation
+
+### Next Step
     ▪ Handling upploaded files and images
+    ▪ Static text translation
 
     
