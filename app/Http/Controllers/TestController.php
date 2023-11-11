@@ -10,14 +10,18 @@ use App\Models\User;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Cache\Repository as Cache;
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use App\Http\Interfaces\TestInterface;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class TestController extends Controller
 {
@@ -31,9 +35,13 @@ class TestController extends Controller
     public function test( Request $request )
     {
 
-        return (new App\Mail\PasswordResetMail( User::first(),'fgsdfgfg4s5dfg654df4g5df4g5'))->render();
 
-//        return view('customer.test');
+
+
+
+
+
+        return view('customer.test');
 
 
 
@@ -79,7 +87,55 @@ class TestController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->testInterface->store($request);
+
+
+        $products = App\Models\product::  get();
+
+        foreach ($products as $product){
+            /*** @var App\Models\product $product */
+            $product->addMedia($request->file('image'))
+                ->preservingOriginal()
+            ->toMediaCollection('default', 'public');
+        }
+
+        return;
+
+
+        /**** @var  User $user*/
+        $user  = User::first();
+        $media_collection = $user->getMedia('images')->find(5);
+
+
+
+
+//        dump($media_collection->original_url);
+//        dump($media_collection->getUrl());
+//
+//        dd($media_collection);
+
+//        $path = $request->file('image')->storeAS('', 'avswew');
+//        $user->addMedia($request->file('image'))->toMediaCollection('images') ;
+//        $product =  App\Models\product::create([
+//            'name'=>'abc'
+//        ]);
+        $product = App\Models\product::first();
+         $user->addMedia($request->file('image'))
+             ->usingName('image_1234567498')
+             ->usingFileName('image_name_123456749.asdas')
+             ->withCustomProperties([
+                 'image_title'=>'asdadsf',
+                 'image_alt'=>'qweqw'
+             ])
+             ->toMediaCollection('images')
+
+         ;
+
+
+//        $path = $request->file('image')   ->store('public/asd');
+//        $path = $request->file('image')->storePublicly('asd');
+
+
+        //return $this->testInterface->store($request);
     }
 
     /**
