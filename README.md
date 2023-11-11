@@ -67,6 +67,6 @@ supported by the online shopping system **till now** along with the user classes
 ### Next steps
     ▪ Add product category
     ▪ Add product
-    ▪ Multi current support
+    ▪ Multi currency support
 
     
