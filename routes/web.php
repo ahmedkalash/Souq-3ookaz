@@ -114,6 +114,8 @@ Route::group([
      })->name('index');
 
      Route::get('/test',[\App\Http\Controllers\TestController::class, 'test'])->name('test');
+     Route::post('/test',[\App\Http\Controllers\TestController::class, 'store'])->name('test.store');
+
 
 });
 
