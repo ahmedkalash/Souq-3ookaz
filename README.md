@@ -33,7 +33,8 @@
 
 ## Product Functions
 
-Enlisted below are all the major functions supported by the online shopping system **till now** along with the user classes.
+Enlisted below are all the major functions and features
+supported by the online shopping system **till now** along with the user classes.
 ### Customer
     ▪ Register
     ▪ Login
@@ -43,12 +44,29 @@ Enlisted below are all the major functions supported by the online shopping syst
     ▪ Prevent too many fiald login attempts
     ▪ Authentication with google
     
+
 ### Admin
     ▪ Setup filament admin panel
     ▪ Website settings managment
 
+
+### Some implementation details
+    ▪ I used spatie media library to handel files.
+    ▪ I used spatie permissions to handel roles and permissions.
+    ▪ For the login, registration, password reset and email verification I did not use any package.
+    ▪ spatie Laravel translatable was used to handel model translations.
+    ▪ Laravel socialite was used to authenticate with OAuth providers .
+    ▪ RealRashid\SweetAlert was used to handel alerts
+    
+
+
+
+
+
+
 ### Next steps
-    ▪ Handling upploaded files and images
-    ▪ Static text translation
+    ▪ Add product category
+    ▪ Add product
+    ▪ Multi current support
 
     
