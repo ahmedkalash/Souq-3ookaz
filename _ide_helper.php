@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 9.52.15.
+ * Generated for Laravel 9.52.16.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -18291,6 +18291,70 @@
      
 }
 
+    namespace Intervention\Image\Facades { 
+            /**
+     * 
+     *
+     */ 
+        class Image {
+                    /**
+         * Overrides configuration settings
+         *
+         * @param array $config
+         * @return self 
+         * @static 
+         */ 
+        public static function configure($config = [])
+        {
+                        /** @var \Intervention\Image\ImageManager $instance */
+                        return $instance->configure($config);
+        }
+                    /**
+         * Initiates an Image instance from different input types
+         *
+         * @param mixed $data
+         * @return \Intervention\Image\Image 
+         * @static 
+         */ 
+        public static function make($data)
+        {
+                        /** @var \Intervention\Image\ImageManager $instance */
+                        return $instance->make($data);
+        }
+                    /**
+         * Creates an empty image canvas
+         *
+         * @param int $width
+         * @param int $height
+         * @param mixed $background
+         * @return \Intervention\Image\Image 
+         * @static 
+         */ 
+        public static function canvas($width, $height, $background = null)
+        {
+                        /** @var \Intervention\Image\ImageManager $instance */
+                        return $instance->canvas($width, $height, $background);
+        }
+                    /**
+         * Create new cached image and run callback
+         * (requires additional package intervention/imagecache)
+         *
+         * @param \Closure $callback
+         * @param int $lifetime
+         * @param boolean $returnObj
+         * @return \Image 
+         * @static 
+         */ 
+        public static function cache($callback, $lifetime = null, $returnObj = false)
+        {
+                        /** @var \Intervention\Image\ImageManager $instance */
+                        return $instance->cache($callback, $lifetime, $returnObj);
+        }
+         
+    }
+     
+}
+
     namespace Laravel\Socialite\Facades { 
             /**
      * 
@@ -20133,6 +20197,338 @@
                     /**
          * 
          *
+         * @see \Filament\Testing\TestsPageActions::mountPageAction()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function mountPageAction($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::mountPageAction($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::setPageActionData()
+         * @param array $data
+         * @return static 
+         * @static 
+         */ 
+        public static function setPageActionData($data)
+        {
+                        return \Livewire\Testing\TestableLivewire::setPageActionData($data);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertPageActionDataSet()
+         * @param array $data
+         * @return static 
+         * @static 
+         */ 
+        public static function assertPageActionDataSet($data)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertPageActionDataSet($data);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::callPageAction()
+         * @param string $name
+         * @param array $data
+         * @param array $arguments
+         * @return static 
+         * @static 
+         */ 
+        public static function callPageAction($name, $data = [], $arguments = [])
+        {
+                        return \Livewire\Testing\TestableLivewire::callPageAction($name, $data, $arguments);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::callMountedPageAction()
+         * @param array $arguments
+         * @return static 
+         * @static 
+         */ 
+        public static function callMountedPageAction($arguments = [])
+        {
+                        return \Livewire\Testing\TestableLivewire::callMountedPageAction($arguments);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertPageActionExists()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertPageActionExists($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertPageActionExists($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertPageActionDoesNotExist()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertPageActionDoesNotExist($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertPageActionDoesNotExist($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertPageActionsExistInOrder()
+         * @param array $names
+         * @return static 
+         * @static 
+         */ 
+        public static function assertPageActionsExistInOrder($names)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertPageActionsExistInOrder($names);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertPageActionVisible()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertPageActionVisible($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertPageActionVisible($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertPageActionHidden()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertPageActionHidden($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertPageActionHidden($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertPageActionEnabled()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertPageActionEnabled($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertPageActionEnabled($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertPageActionDisabled()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertPageActionDisabled($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertPageActionDisabled($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertPageActionHasIcon()
+         * @param string $name
+         * @param string $icon
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertPageActionHasIcon($name, $icon, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertPageActionHasIcon($name, $icon, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertPageActionDoesNotHaveIcon()
+         * @param string $name
+         * @param string $icon
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertPageActionDoesNotHaveIcon($name, $icon, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertPageActionDoesNotHaveIcon($name, $icon, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertPageActionHasLabel()
+         * @param string $name
+         * @param string $label
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertPageActionHasLabel($name, $label, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertPageActionHasLabel($name, $label, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertPageActionDoesNotHaveLabel()
+         * @param string $name
+         * @param string $label
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertPageActionDoesNotHaveLabel($name, $label, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertPageActionDoesNotHaveLabel($name, $label, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertPageActionHasColor()
+         * @param string $name
+         * @param string $color
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertPageActionHasColor($name, $color, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertPageActionHasColor($name, $color, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertPageActionDoesNotHaveColor()
+         * @param string $name
+         * @param string $color
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertPageActionDoesNotHaveColor($name, $color, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertPageActionDoesNotHaveColor($name, $color, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertPageActionHasUrl()
+         * @param string $name
+         * @param string $url
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertPageActionHasUrl($name, $url, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertPageActionHasUrl($name, $url, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertPageActionDoesNotHaveUrl()
+         * @param string $name
+         * @param string $url
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertPageActionDoesNotHaveUrl($name, $url, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertPageActionDoesNotHaveUrl($name, $url, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertPageActionShouldOpenUrlInNewTab()
+         * @param string $name
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertPageActionShouldOpenUrlInNewTab($name, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertPageActionShouldOpenUrlInNewTab($name, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertPageActionShouldNotOpenUrlInNewTab()
+         * @param string $name
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertPageActionShouldNotOpenUrlInNewTab($name, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertPageActionShouldNotOpenUrlInNewTab($name, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertPageActionHalted()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertPageActionHalted($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertPageActionHalted($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertPageActionHalted()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertPageActionHeld($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertPageActionHeld($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertHasPageActionErrors()
+         * @param array $keys
+         * @return static 
+         * @static 
+         */ 
+        public static function assertHasPageActionErrors($keys = [])
+        {
+                        return \Livewire\Testing\TestableLivewire::assertHasPageActionErrors($keys);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Testing\TestsPageActions::assertHasNoPageActionErrors()
+         * @param array $keys
+         * @return static 
+         * @static 
+         */ 
+        public static function assertHasNoPageActionErrors($keys = [])
+        {
+                        return \Livewire\Testing\TestableLivewire::assertHasNoPageActionErrors($keys);
+        }
+                    /**
+         * 
+         *
          * @see \Filament\Forms\Testing\TestsForms::fillForm()
          * @param array $state
          * @param string $formName
@@ -20271,6 +20667,1002 @@
         public static function assertNotified($notification = null)
         {
                         return \Livewire\Testing\TestableLivewire::assertNotified($notification);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::mountTableAction()
+         * @param string $name
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function mountTableAction($name, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::mountTableAction($name, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::setTableActionData()
+         * @param array $data
+         * @return static 
+         * @static 
+         */ 
+        public static function setTableActionData($data)
+        {
+                        return \Livewire\Testing\TestableLivewire::setTableActionData($data);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableActionDataSet()
+         * @param array $data
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableActionDataSet($data)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableActionDataSet($data);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::callTableAction()
+         * @param string $name
+         * @param mixed $record
+         * @param array $data
+         * @param array $arguments
+         * @return static 
+         * @static 
+         */ 
+        public static function callTableAction($name, $record = null, $data = [], $arguments = [])
+        {
+                        return \Livewire\Testing\TestableLivewire::callTableAction($name, $record, $data, $arguments);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::callMountedTableAction()
+         * @param array $arguments
+         * @return static 
+         * @static 
+         */ 
+        public static function callMountedTableAction($arguments = [])
+        {
+                        return \Livewire\Testing\TestableLivewire::callMountedTableAction($arguments);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableActionExists()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableActionExists($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableActionExists($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableActionDoesNotExist()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableActionDoesNotExist($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableActionDoesNotExist($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableActionsExistInOrder()
+         * @param array $names
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableActionsExistInOrder($names)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableActionsExistInOrder($names);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableHeaderActionsExistInOrder()
+         * @param array $names
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableHeaderActionsExistInOrder($names)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableHeaderActionsExistInOrder($names);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableEmptyStateActionsExistInOrder()
+         * @param array $names
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableEmptyStateActionsExistInOrder($names)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableEmptyStateActionsExistInOrder($names);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableActionVisible()
+         * @param string $name
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableActionVisible($name, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableActionVisible($name, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableActionHidden()
+         * @param string $name
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableActionHidden($name, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableActionHidden($name, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableActionEnabled()
+         * @param string $name
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableActionEnabled($name, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableActionEnabled($name, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableActionDisabled()
+         * @param string $name
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableActionDisabled($name, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableActionDisabled($name, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableActionHasIcon()
+         * @param string $name
+         * @param string $icon
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableActionHasIcon($name, $icon, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableActionHasIcon($name, $icon, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableActionDoesNotHaveIcon()
+         * @param string $name
+         * @param string $icon
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableActionDoesNotHaveIcon($name, $icon, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableActionDoesNotHaveIcon($name, $icon, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableActionHasLabel()
+         * @param string $name
+         * @param string $label
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableActionHasLabel($name, $label, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableActionHasLabel($name, $label, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableActionDoesNotHaveLabel()
+         * @param string $name
+         * @param string $label
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableActionDoesNotHaveLabel($name, $label, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableActionDoesNotHaveLabel($name, $label, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableActionHasColor()
+         * @param string $name
+         * @param string $color
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableActionHasColor($name, $color, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableActionHasColor($name, $color, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableActionDoesNotHaveColor()
+         * @param string $name
+         * @param string $color
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableActionDoesNotHaveColor($name, $color, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableActionDoesNotHaveColor($name, $color, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableActionHasUrl()
+         * @param string $name
+         * @param string $url
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableActionHasUrl($name, $url, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableActionHasUrl($name, $url, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableActionDoesNotHaveUrl()
+         * @param string $name
+         * @param string $url
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableActionDoesNotHaveUrl($name, $url, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableActionDoesNotHaveUrl($name, $url, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableActionShouldOpenUrlInNewTab()
+         * @param string $name
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableActionShouldOpenUrlInNewTab($name, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableActionShouldOpenUrlInNewTab($name, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableActionShouldNotOpenUrlInNewTab()
+         * @param string $name
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableActionShouldNotOpenUrlInNewTab($name, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableActionShouldNotOpenUrlInNewTab($name, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableActionHalted()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableActionHalted($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableActionHalted($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertTableActionHalted()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableActionHeld($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableActionHeld($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertHasTableActionErrors()
+         * @param array $keys
+         * @return static 
+         * @static 
+         */ 
+        public static function assertHasTableActionErrors($keys = [])
+        {
+                        return \Livewire\Testing\TestableLivewire::assertHasTableActionErrors($keys);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsActions::assertHasNoTableActionErrors()
+         * @param array $keys
+         * @return static 
+         * @static 
+         */ 
+        public static function assertHasNoTableActionErrors($keys = [])
+        {
+                        return \Livewire\Testing\TestableLivewire::assertHasNoTableActionErrors($keys);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::mountTableBulkAction()
+         * @param string $name
+         * @param \Illuminate\Support\Collection|array $records
+         * @return static 
+         * @static 
+         */ 
+        public static function mountTableBulkAction($name, $records)
+        {
+                        return \Livewire\Testing\TestableLivewire::mountTableBulkAction($name, $records);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::setTableBulkActionData()
+         * @param array $data
+         * @return static 
+         * @static 
+         */ 
+        public static function setTableBulkActionData($data)
+        {
+                        return \Livewire\Testing\TestableLivewire::setTableBulkActionData($data);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::assertTableBulkActionDataSet()
+         * @param array $data
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableBulkActionDataSet($data)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableBulkActionDataSet($data);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::callTableBulkAction()
+         * @param string $name
+         * @param \Illuminate\Support\Collection|array $records
+         * @param array $data
+         * @param array $arguments
+         * @return static 
+         * @static 
+         */ 
+        public static function callTableBulkAction($name, $records, $data = [], $arguments = [])
+        {
+                        return \Livewire\Testing\TestableLivewire::callTableBulkAction($name, $records, $data, $arguments);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::callMountedTableBulkAction()
+         * @param array $arguments
+         * @return static 
+         * @static 
+         */ 
+        public static function callMountedTableBulkAction($arguments = [])
+        {
+                        return \Livewire\Testing\TestableLivewire::callMountedTableBulkAction($arguments);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::assertTableBulkActionExists()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableBulkActionExists($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableBulkActionExists($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::assertTableBulkActionDoesNotExist()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableBulkActionDoesNotExist($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableBulkActionDoesNotExist($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::assertTableBulkActionsExistInOrder()
+         * @param array $names
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableBulkActionsExistInOrder($names)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableBulkActionsExistInOrder($names);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::assertTableBulkActionVisible()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableBulkActionVisible($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableBulkActionVisible($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::assertTableBulkActionHidden()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableBulkActionHidden($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableBulkActionHidden($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::assertTableBulkActionEnabled()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableBulkActionEnabled($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableBulkActionEnabled($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::assertTableBulkActionDisabled()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableBulkActionDisabled($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableBulkActionDisabled($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::assertTableBulkActionHasIcon()
+         * @param string $name
+         * @param string $icon
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableBulkActionHasIcon($name, $icon, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableBulkActionHasIcon($name, $icon, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::assertTableBulkActionDoesNotHaveIcon()
+         * @param string $name
+         * @param string $icon
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableBulkActionDoesNotHaveIcon($name, $icon, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableBulkActionDoesNotHaveIcon($name, $icon, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::assertTableBulkActionHasLabel()
+         * @param string $name
+         * @param string $label
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableBulkActionHasLabel($name, $label, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableBulkActionHasLabel($name, $label, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::assertTableBulkActionDoesNotHaveLabel()
+         * @param string $name
+         * @param string $label
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableBulkActionDoesNotHaveLabel($name, $label, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableBulkActionDoesNotHaveLabel($name, $label, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::assertTableBulkActionHasColor()
+         * @param string $name
+         * @param string $color
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableBulkActionHasColor($name, $color, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableBulkActionHasColor($name, $color, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::assertTableBulkActionDoesNotHaveColor()
+         * @param string $name
+         * @param string $color
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableBulkActionDoesNotHaveColor($name, $color, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableBulkActionDoesNotHaveColor($name, $color, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::assertTableBulkActionHalted()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableBulkActionHalted($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableBulkActionHalted($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::assertTableBulkActionHalted()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableBulkActionHeld($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableBulkActionHeld($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::assertHasTableBulkActionErrors()
+         * @param array $keys
+         * @return static 
+         * @static 
+         */ 
+        public static function assertHasTableBulkActionErrors($keys = [])
+        {
+                        return \Livewire\Testing\TestableLivewire::assertHasTableBulkActionErrors($keys);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsBulkActions::assertHasNoTableBulkActionErrors()
+         * @param array $keys
+         * @return static 
+         * @static 
+         */ 
+        public static function assertHasNoTableBulkActionErrors($keys = [])
+        {
+                        return \Livewire\Testing\TestableLivewire::assertHasNoTableBulkActionErrors($keys);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::assertCanRenderTableColumn()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertCanRenderTableColumn($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertCanRenderTableColumn($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::assertCanNotRenderTableColumn()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertCanNotRenderTableColumn($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertCanNotRenderTableColumn($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::assertTableColumnExists()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableColumnExists($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableColumnExists($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::assertTableColumnVisible()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableColumnVisible($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableColumnVisible($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::assertTableColumnHidden()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableColumnHidden($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableColumnHidden($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::assertTableColumnStateSet()
+         * @param string $name
+         * @param mixed $value
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableColumnStateSet($name, $value, $record)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableColumnStateSet($name, $value, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::assertTableColumnStateNotSet()
+         * @param string $name
+         * @param mixed $value
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableColumnStateNotSet($name, $value, $record)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableColumnStateNotSet($name, $value, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::assertTableColumnFormattedStateSet()
+         * @param string $name
+         * @param mixed $value
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableColumnFormattedStateSet($name, $value, $record)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableColumnFormattedStateSet($name, $value, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::assertTableColumnFormattedStateNotSet()
+         * @param string $name
+         * @param mixed $value
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableColumnFormattedStateNotSet($name, $value, $record)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableColumnFormattedStateNotSet($name, $value, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::assertTableColumnHasExtraAttributes()
+         * @param string $name
+         * @param array $attributes
+         * @param mixed $record
+         * @static 
+         */ 
+        public static function assertTableColumnHasExtraAttributes($name, $attributes, $record)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableColumnHasExtraAttributes($name, $attributes, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::assertTableColumnDoesNotHaveExtraAttributes()
+         * @param string $name
+         * @param array $attributes
+         * @param mixed $record
+         * @static 
+         */ 
+        public static function assertTableColumnDoesNotHaveExtraAttributes($name, $attributes, $record)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableColumnDoesNotHaveExtraAttributes($name, $attributes, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::assertTableColumnHasDescription()
+         * @param string $name
+         * @param mixed $description
+         * @param mixed $record
+         * @param string $position
+         * @static 
+         */ 
+        public static function assertTableColumnHasDescription($name, $description, $record, $position = 'below')
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableColumnHasDescription($name, $description, $record, $position);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::assertTableColumnDoesNotHaveDescription()
+         * @param string $name
+         * @param mixed $description
+         * @param mixed $record
+         * @param string $position
+         * @static 
+         */ 
+        public static function assertTableColumnDoesNotHaveDescription($name, $description, $record, $position = 'below')
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableColumnDoesNotHaveDescription($name, $description, $record, $position);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::assertSelectColumnHasOptions()
+         * @param string $name
+         * @param array $options
+         * @param mixed $record
+         * @static 
+         */ 
+        public static function assertSelectColumnHasOptions($name, $options, $record)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertSelectColumnHasOptions($name, $options, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::assertSelectColumnDoesNotHaveOptions()
+         * @param string $name
+         * @param array $options
+         * @param mixed $record
+         * @static 
+         */ 
+        public static function assertSelectColumnDoesNotHaveOptions($name, $options, $record)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertSelectColumnDoesNotHaveOptions($name, $options, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::callTableColumnAction()
+         * @param string $name
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */ 
+        public static function callTableColumnAction($name, $record = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::callTableColumnAction($name, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::sortTable()
+         * @param string|null $name
+         * @param string|null $direction
+         * @return static 
+         * @static 
+         */ 
+        public static function sortTable($name = null, $direction = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::sortTable($name, $direction);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::searchTable()
+         * @param string|null $search
+         * @return static 
+         * @static 
+         */ 
+        public static function searchTable($search = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::searchTable($search);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::searchTableColumns()
+         * @param array $searches
+         * @return static 
+         * @static 
+         */ 
+        public static function searchTableColumns($searches)
+        {
+                        return \Livewire\Testing\TestableLivewire::searchTableColumns($searches);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsFilters::filterTable()
+         * @param string $name
+         * @param mixed $data
+         * @return static 
+         * @static 
+         */ 
+        public static function filterTable($name, $data = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::filterTable($name, $data);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsFilters::resetTableFilters()
+         * @return static 
+         * @static 
+         */ 
+        public static function resetTableFilters()
+        {
+                        return \Livewire\Testing\TestableLivewire::resetTableFilters();
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsFilters::removeTableFilter()
+         * @param string $filter
+         * @param string|null $field
+         * @return static 
+         * @static 
+         */ 
+        public static function removeTableFilter($filter, $field = null)
+        {
+                        return \Livewire\Testing\TestableLivewire::removeTableFilter($filter, $field);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsFilters::removeTableFilters()
+         * @return static 
+         * @static 
+         */ 
+        public static function removeTableFilters()
+        {
+                        return \Livewire\Testing\TestableLivewire::removeTableFilters();
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsFilters::assertTableFilterExists()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertTableFilterExists($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertTableFilterExists($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsRecords::assertCanSeeTableRecords()
+         * @param \Illuminate\Support\Collection|array $records
+         * @param bool $inOrder
+         * @return static 
+         * @static 
+         */ 
+        public static function assertCanSeeTableRecords($records, $inOrder = false)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertCanSeeTableRecords($records, $inOrder);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsRecords::assertCanNotSeeTableRecords()
+         * @param \Illuminate\Support\Collection|array $records
+         * @return static 
+         * @static 
+         */ 
+        public static function assertCanNotSeeTableRecords($records)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertCanNotSeeTableRecords($records);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsRecords::assertCountTableRecords()
+         * @param int $count
+         * @return static 
+         * @static 
+         */ 
+        public static function assertCountTableRecords($count)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertCountTableRecords($count);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsRecords::loadTable()
+         * @return static 
+         * @static 
+         */ 
+        public static function loadTable()
+        {
+                        return \Livewire\Testing\TestableLivewire::loadTable();
         }
          
     }
@@ -20479,6 +21871,20 @@
         {
                         return \Illuminate\View\View::slot($slot);
         }
+         
+    }
+     
+}
+
+    namespace Spatie\MediaLibrary\MediaCollections\Models\Collections { 
+            /**
+     * 
+     *
+     * @template TKey of array-key
+     * @template TModel of \Spatie\MediaLibrary\MediaCollections\Models\Media
+     * @extends Collection<TKey, TModel>
+     */ 
+        class MediaCollection {
          
     }
      
@@ -24320,6 +25726,7 @@ namespace  {
             class View extends \Illuminate\Support\Facades\View {}
             class Vite extends \Illuminate\Support\Facades\Vite {}
             class Debugbar extends \Barryvdh\Debugbar\Facades\Debugbar {}
+            class Image extends \Intervention\Image\Facades\Image {}
             class Socialite extends \Laravel\Socialite\Facades\Socialite {}
             class Livewire extends \Livewire\Livewire {}
             class LaravelLocalization extends \Mcamara\LaravelLocalization\Facades\LaravelLocalization {}
