@@ -6,13 +6,18 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
-        "filament/filament": "^2.0",
-        "filament/forms": "^2.0",
-        "filament/spatie-laravel-settings-plugin": "^2.0-stable",
-        "filament/spatie-laravel-translatable-plugin": "^2.0-stable",
+        "filament/actions": "^3.0-stable",
+        "filament/filament": "^3.0-stable",
+        "filament/forms": "^3.0-stable",
+        "filament/infolists": "^3.0-stable",
+        "filament/notifications": "^3.0-stable",
+        "filament/spatie-laravel-media-library-plugin": "^3.0-stable",
+        "filament/spatie-laravel-settings-plugin": "^3.0-stable",
+        "filament/spatie-laravel-translatable-plugin": "^3.0-stable",
+        "filament/widgets": "^3.0-stable",
         "guzzlehttp/guzzle": "^7.2",
-        "laravel/framework": "^9.19",
-        "laravel/sanctum": "^3.0",
+        "laravel/framework": "^10.0",
+        "laravel/sanctum": "^3.2",
         "laravel/socialite": "^5.9",
         "laravel/tinker": "^2.7",
         "mcamara/laravel-localization": "^1.8",
@@ -21,6 +26,7 @@
         "spatie/laravel-permission": "^5.10",
         "spatie/laravel-settings": "^3.2",
         "spatie/laravel-translatable": "^6.5",
+        "staudenmeir/laravel-adjacency-list": "^1.13",
         "symfony/http-client": "^6.3",
         "symfony/mailgun-mailer": "^6.3",
         "unlimited/repository-design-pattern-laravel": "^5.5"
@@ -29,12 +35,13 @@
         "barryvdh/laravel-debugbar": "^3.9",
         "barryvdh/laravel-ide-helper": "^2.13",
         "fakerphp/faker": "^1.9.1",
+        "filament/upgrade": "^3.0-stable",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^6.1",
-        "phpunit/phpunit": "^9.5.10",
-        "spatie/laravel-ignition": "^1.0"
+        "nunomaduro/collision": "^7.0",
+        "phpunit/phpunit": "^10.0",
+        "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -42,7 +49,9 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         },
-        "files": ["app/Http/Helpers/general.php"]
+        "files": [
+            "app/Http/Helpers/general.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -52,7 +61,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"

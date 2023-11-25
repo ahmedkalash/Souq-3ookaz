@@ -3,8 +3,13 @@
 namespace App\Filament\Resources\ProductCategoryResource\Pages;
 
 use App\Filament\Resources\ProductCategoryResource;
-use Filament\Pages\Actions;
+use Filament\Actions;
+use Filament\Forms\Form;
 use Filament\Resources\Pages\ViewRecord;
+
+/***
+ * @property ProductCategoryResource $resource
+ * */
 
 class ViewProductCategory extends ViewRecord
 {
@@ -12,7 +17,7 @@ class ViewProductCategory extends ViewRecord
 
     protected static string $resource = ProductCategoryResource::class;
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             Actions\EditAction::make(),
@@ -20,4 +25,11 @@ class ViewProductCategory extends ViewRecord
 
         ];
     }
+
+
+    public function form(Form $form): Form
+    {
+        return static::getResource()::sharedForm($form,  $this->getActiveFormsLocale() ?? $this->getResource()::getTranslatableLocales());
+    }
+
 }

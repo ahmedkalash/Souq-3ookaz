@@ -6,6 +6,7 @@ use App;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\Web\Customer\Auth\RegisterRepository;
 use App\Mail\EmailVerificationMail;
+use App\Models\ProductCategory;
 use App\Models\User;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -36,9 +37,35 @@ class TestController extends Controller
     public function test( Request $request )
     {
 
+        /*** @var Collection $cat*/
+      $cat = ProductCategory::tree(50);
+
+        $constraint = function ($query) {
+            $query->whereNotIn('id', [1,3,4]);
+        };
+
+        $tree = ProductCategory::treeOf($constraint)->get()->totree();
 
 
 
+      dd($tree);
+
+
+
+      $cat = App\Models\ProductCategory::find(80);
+
+       $cat->update([
+                'parent_id'=>84
+            ]);
+
+
+        try {
+            $cat->update([
+                'parent_id'=>84
+            ]);
+        }catch (\Throwable $e){
+            dump($e);
+        }
 
 
 

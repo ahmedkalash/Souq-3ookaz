@@ -10,7 +10,7 @@ class EditTest extends EditRecord
 {
     protected static string $resource = TestResource::class;
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             Actions\DeleteAction::make(),
