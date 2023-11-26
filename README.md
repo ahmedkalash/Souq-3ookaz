@@ -48,7 +48,8 @@ supported by the online shopping system **till now** along with the user classes
 ### Admin
     ▪ Setup filament admin panel
     ▪ Website settings managment
-
+    ▪ Can perform CRUD operation for the product categoey 
+    
 
 ### Some implementation details
     ▪ I used spatie media library to handel files.
@@ -57,15 +58,17 @@ supported by the online shopping system **till now** along with the user classes
     ▪ spatie Laravel translatable was used to handel model translations.
     ▪ Laravel socialite was used to authenticate with OAuth providers .
     ▪ RealRashid\SweetAlert was used to handel alerts
+
     
 
-
-
-
-
+### Some information about product category 
+    ▪ You can add many categories , sub categories , sub sub categories and so on (unlimited levels of categories)
+    ▪ Each categoey can have many chiledren and only one parent (one to many)
+    ▪ Laravel-adjacency-listt package was used to handel the category hierarchy using recursive sql queries
+    ▪ You can see the direct parent of the category and it's level in the hierarchy starting form level 0 as a root category
+    ▪ I put some trigers on the product_categories table to detect and prevent cycels in the category tree to aviod infinite sql queries
 
 ### Next steps
-    ▪ Add product category
     ▪ Add product
     ▪ Multi current support
 
