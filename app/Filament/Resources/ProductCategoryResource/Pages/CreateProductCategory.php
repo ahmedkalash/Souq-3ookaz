@@ -3,20 +3,19 @@
 namespace App\Filament\Resources\ProductCategoryResource\Pages;
 
 use App\Filament\Resources\ProductCategoryResource;
-use App\Models\ProductCategory;
 use Filament\Actions;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 
 class CreateProductCategory extends CreateRecord
 {
-    use CreateRecord\Concerns\Translatable;
+    use CreateRecord\Concerns\Translatable {
+        handleRecordCreation as translatableHandleRecordCreation;
+    }
 
     protected static string $resource = ProductCategoryResource::class;
 
@@ -46,7 +45,7 @@ class CreateProductCategory extends CreateRecord
         // handel prevent cycle db exception and send error msg to the user
 
         try {
-            $res =  parent::handleRecordCreation($data);
+            $res =  $this->translatableHandleRecordCreation($data);
         }catch (\Throwable $e){
             if ($e->getCode() == static::getResource()::PREVENT_CYCLE_ERROR_CODE){
                 Notification::make()

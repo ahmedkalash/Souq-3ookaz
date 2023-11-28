@@ -46,7 +46,7 @@ class EditProductCategory extends EditRecord
         try {
             $res =  parent::handleRecordUpdate($record, $data);
         }catch (\Throwable $e){
-            if ($e->getCode() == static::getResource()::PREVENT_CYCLE_TRIGGER_ERROR_CODE){
+            if ($e->getCode() == static::getResource()::PREVENT_CYCLE_ERROR_CODE){
                 Notification::make()
                     ->danger()
                     ->title("Cannot create cycle in category hierarchy")

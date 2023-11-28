@@ -8,7 +8,6 @@ use App\Models\ProductCategory;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Concerns\Translatable;
 use Filament\Forms\Form;
@@ -71,16 +70,13 @@ class ProductCategoryResource extends Resource
                     ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
 
                 TextInput::make('slug')
-                    ->required()
+                    ->readOnly()
                     ->string()
-                ->unique(app(static::getModel())->getTable(), 'id' ),
+                    ->unique(app(static::getModel())->getTable(), 'id' ),
 
                 TextInput::make('depth')
                     ->label('level')
-                    ->disabled()
-                    ->required()
-                    ->numeric(),
-
+                    ->disabled(),
 
                 Select::make('parent_id')
                     ->label('Parent category')
