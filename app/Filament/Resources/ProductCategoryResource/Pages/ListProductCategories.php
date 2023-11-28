@@ -32,6 +32,7 @@ class ListProductCategories extends ListRecords
         ];
     }
 
+
     public function getTabs(): array
     {
         return [
@@ -49,9 +50,6 @@ class ListProductCategories extends ListRecords
         return  $table
             ->columns([
                 TextColumn::make('index')->rowIndex(),
-                TextColumn::make('id')
-                    ->searchable()
-                    ->sortable(),
 
                 TextColumn::make('name')
                     ->searchable()

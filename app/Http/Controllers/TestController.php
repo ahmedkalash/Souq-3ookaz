@@ -37,6 +37,13 @@ class TestController extends Controller
     public function test( Request $request )
     {
 
+        $cats = ProductCategory::find(3)->products()->get();
+        dump($cats);
+
+
+        dd(App\Models\Product::find(11)->categories()->get());
+
+
         /*** @var Collection $cat*/
       $cat = ProductCategory::tree(50);
 
@@ -117,10 +124,10 @@ class TestController extends Controller
     {
 
 
-        $products = App\Models\product::  get();
+        $products = App\Models\Product::  get();
 
         foreach ($products as $product){
-            /*** @var App\Models\product $product */
+            /*** @var App\Models\Product $product */
             $product->addMedia($request->file('image'))
                 ->preservingOriginal()
             ->toMediaCollection('default', 'public');
@@ -146,7 +153,7 @@ class TestController extends Controller
 //        $product =  App\Models\product::create([
 //            'name'=>'abc'
 //        ]);
-        $product = App\Models\product::first();
+        $product = App\Models\Product::first();
          $user->addMedia($request->file('image'))
              ->usingName('image_1234567498')
              ->usingFileName('image_name_123456749.asdas')

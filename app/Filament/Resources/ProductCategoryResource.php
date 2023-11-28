@@ -71,7 +71,6 @@ class ProductCategoryResource extends Resource
                     ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
 
                 TextInput::make('slug')
-                    ->disabled()
                     ->required()
                     ->string()
                 ->unique(app(static::getModel())->getTable(), 'id' ),

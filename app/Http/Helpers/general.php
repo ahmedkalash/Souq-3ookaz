@@ -47,3 +47,31 @@ if(!function_exists('settings')) {
 
 
 
+
+if(!function_exists('render_star_rating')) {
+     function render_star_rating(int $rate){
+        $stars='';
+
+        for ($index=1; $index <=5; $index++){
+            if($index <= $rate){
+                $stars.= '<i class="fa-solid fa-star" style="color: #FFAE00FF;"></i>';
+            }else{
+                $stars.= '<i class="fa-regular fa-star" style="color: #FFAE00FF;"></i>';
+            }
+        }
+
+
+        return
+            "<div class='flex flex-row-reverse justify-center p-10'>
+               {$stars}
+            </di"
+            ;
+    }
+}
+
+
+
+
+
+
+

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\CanGetTableInfoStatically;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -12,7 +13,7 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
 class ProductCategory extends Model implements HasMedia
 {
-    use HasFactory, HasTranslations, InteractsWithMedia, HasRecursiveRelationships;
+    use HasFactory, HasTranslations, InteractsWithMedia, HasRecursiveRelationships, CanGetTableInfoStatically;
 
 
     /**
@@ -31,10 +32,6 @@ class ProductCategory extends Model implements HasMedia
 
 
 
-
-
-
-
     public function parent(){
         return $this->belongsTo(ProductCategory::class,'parent_id');
     }
@@ -48,6 +45,24 @@ class ProductCategory extends Model implements HasMedia
     public function children(){
         return $this->hasMany(ProductCategory::class,'parent_id');
     }
+
+
+
+    public function products(){
+        return $this->belongsToMany(
+            Product::class,
+            'category_has_products',
+            'product_category_id',
+            'product_id',
+        )->withTimestamps();
+    }
+
+
+
+
+
+
+
 
 
 

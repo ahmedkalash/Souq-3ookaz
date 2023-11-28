@@ -69,7 +69,6 @@ supported by the online shopping system **till now** along with the user classes
     ▪ I put some trigers on the product_categories table to detect and prevent cycels in the category tree to aviod infinite sql queries
 
 ### Next steps
-    ▪ Add product
     ▪ Multi current support
 
     
