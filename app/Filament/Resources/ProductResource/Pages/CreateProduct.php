@@ -29,6 +29,8 @@ class CreateProduct extends CreateRecord
             return $resource::getUrl('edit', ['record' => $this->getRecord(), ...$this->getRedirectUrlParameters()]);
         }
 
+        return $resource::getUrl('index');
+
     }
 
 
