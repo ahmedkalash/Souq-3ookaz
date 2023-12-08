@@ -49,6 +49,7 @@ supported by the online shopping system **till now** along with the user classes
     ▪ Setup filament admin panel
     ▪ Website settings managment
     ▪ Can perform CRUD operation for the product categoey 
+    ▪ Can perform CRUD operation for the product 
     
 
 ### Some implementation details
