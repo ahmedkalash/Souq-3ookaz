@@ -4,8 +4,10 @@ namespace App\Models;
 
 
 use App\Mail\EmailVerificationMail;
+use App\Models\Traits\CanGetTableInfoStatically;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasName;
+use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,7 +22,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable  implements HasMedia , FilamentUser, HasName
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, InteractsWithMedia;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, InteractsWithMedia, CanGetTableInfoStatically;
 
     /**
      * The attributes that are mass assignable.
@@ -69,7 +71,7 @@ class User extends Authenticatable  implements HasMedia , FilamentUser, HasName
 
 
 
-    public function canAccessFilament(): bool
+    public function canAccessPanel(Panel $panel): bool
     {
        return $this->hasAllRoles(['super-admin']);
     }
