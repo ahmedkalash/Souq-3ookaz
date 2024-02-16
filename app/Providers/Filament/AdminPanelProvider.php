@@ -21,6 +21,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Kenepa\TranslationManager\TranslationManagerPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -64,8 +65,11 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ])->plugin(SpatieLaravelTranslatablePlugin::make()
-                ->defaultLocales(['en', 'ar']),
-            );
+            ])
+            ->plugin(SpatieLaravelTranslatablePlugin::make()
+                ->defaultLocales(['en', 'ar'])
+            )
+            ->plugin(TranslationManagerPlugin::make())
+            ->viteTheme('resources/css/filament/admin/theme.css');
     }
 }
