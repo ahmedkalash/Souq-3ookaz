@@ -1,7 +1,7 @@
 @extends('customer.layouts.app')
 
 @section('head')
-        <title> Password reset </title>
+        <title> {{__("password-reset.Password reset")}}  </title>
 @endsection
 
 
@@ -20,7 +20,7 @@
                 <div class="col-xxl-4 col-xl-5 col-lg-6 col-sm-8 mx-auto">
                     <div class="log-in-box">
                         <div class="log-in-title">
-                            <h3>Reset your password</h3>
+                            <h3>{{__("password-reset.Reset your password")}}  </h3>
 {{--                            <h4>Create New Account</h4>--}}
                         </div>
 
@@ -34,8 +34,8 @@
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating">
                                         <input type="password" class="form-control" id="password"
-                                               placeholder="Password"    name="password" required>
-                                        <label for="password">New Password</label>
+                                               placeholder="{{__("password-reset.Password input placeholder")}} "    name="password" required>
+                                        <label for="password">{{__("password-reset.New Password input title")}} </label>
                                     </div>
                                     @error('password')
                                         <div class="alert alert-danger">{{ $message }}</div>
@@ -45,8 +45,8 @@
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating">
                                         <input type="password" class="form-control" id="password_Conformation"
-                                               placeholder="Password_Conformation"   name="password_confirmation" required>
-                                        <label for="password_Conformation">Password Conformation</label>
+                                               placeholder="{{__("password-reset.Password Conformation input placeholder")}} "   name="password_confirmation" required>
+                                        <label for="password_Conformation">{{__("password-reset.Password Conformation input title")}} </label>
                                     </div>
                                     @error('password_confirmation')
                                         <div class="alert alert-danger">{{ $message }}</div>
@@ -55,7 +55,7 @@
 
 
                                 <div class="col-12">
-                                    <button class="btn btn-animation w-100" type="submit">Change Password</button>
+                                    <button class="btn btn-animation w-100" type="submit">{{__("password-reset.Change Password")}} </button>
                                 </div>
                             </form>
                         </div>
@@ -65,7 +65,7 @@
                         </div>
 
                         <div class="sign-up-box">
-                            <a href="{{route('customer.showLoginPage')}}">Log In</a>
+                            <a href="{{route('customer.showLoginPage')}}"> {{__("password-reset.Log In")}} </a>
                         </div>
                     </div>
                 </div>

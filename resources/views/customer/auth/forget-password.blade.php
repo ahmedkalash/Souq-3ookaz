@@ -1,7 +1,7 @@
 @extends('customer.layouts.app')
 
 @section('head')
-    <title>Forgot Password</title>
+    <title> {{__("forget-password.Forgot Password page title")}} </title>
 @endsection
 
 
@@ -38,8 +38,8 @@
                     <div class="d-flex align-items-center justify-content-center h-100">
                         <div class="log-in-box">
                             <div class="log-in-title">
-                                <h3>Forgot your password?</h3>
-                                <h4>Enter Your Email Address</h4>
+                                <h3>{{__("forget-password.Forgot your password?")}}</h3>
+                                <h4>{{__("forget-password.Enter Your Email Address")}}</h4>
                             </div>
 
                             <div class="input-box">
@@ -49,8 +49,8 @@
                                         <div class="form-floating theme-form-floating log-in-form">
 
                                             <input type="email" class="form-control" id="email" name="email"
-                                                   placeholder="Email Address">
-                                            <label for="email">Email Address</label>
+                                                   placeholder="{{__("forget-password.Email Address input placeholder")}}">
+                                            <label for="email">{{__("forget-password.Email Address input title")}}</label>
                                         </div>
                                         @error('email')
                                             <div class="alert alert-danger">{{ $message }}</div>
@@ -59,7 +59,7 @@
 
                                     <div class="col-12">
                                         <button class="btn btn-animation w-100" type="submit">
-                                            Send Password Reset Email
+                                            {{__("forget-password.Send Password Reset Email")}}
                                         </button>
                                     </div>
                                 </form>
