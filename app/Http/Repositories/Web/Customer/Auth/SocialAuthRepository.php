@@ -61,7 +61,7 @@ class SocialAuthRepository implements SocialAuthInterface
                         'first_name'=>$provider_user->getName(),
                         'email_verified_at'=> $provider_user->user['email_verified'] ? date('Y-m-d Hms'):null,
                         'password'=>'default'. Hash::make(Str::random(40)) ,
-                        'avatar'=>$provider_user->getAvatar(),
+                        'provider_avatar'=>$provider_user->getAvatar(),
                         'provider'=>'google',
                         'provider_id'=>$provider_user->getId(),
                     ]);

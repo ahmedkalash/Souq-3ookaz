@@ -34,7 +34,7 @@ class User extends Authenticatable  implements HasMedia , FilamentUser, HasName
         'last_name',
         'email',
         'password',
-        'avatar',
+        'provider_avatar',
         'email_verified_at',
         'provider',
         'provider_id',
@@ -67,6 +67,20 @@ class User extends Authenticatable  implements HasMedia , FilamentUser, HasName
             get: fn ($value, $attributes) => $attributes['first_name'].' '.$attributes['last_name'] ,
         );
     }
+
+
+    protected function avatar(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value, $attributes) {
+                return $attributes['provider_avatar'] ?? $this->getMedia('profile_image')->first()?->getFullUrl();
+            },
+        );
+    }
+
+
+
+
 
 
 

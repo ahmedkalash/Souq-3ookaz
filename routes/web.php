@@ -70,10 +70,12 @@ Route::group([
     });
 
 
-
-
+    // logout
     Route::post('/logout',[\App\Http\Controllers\Web\Customer\Auth\LoginController::class, 'logout'])->name('logout');
 
+
+    Route::get('/products/{product:id}',[\App\Http\Controllers\Web\Customer\ProductController::class,'view'])
+        ->name('PDP');
 
 
 

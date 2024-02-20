@@ -3,11 +3,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Fastkart">
 <meta name="keywords" content="Fastkart">
-<meta name="author" content="Fastkart">
+<meta name="author" content="Ahmed Kalash">
 
 <link rel="icon" href="{{asset('frontend/assets/images/favicon/1.png')}}" type="image/x-icon">
 
 
 
-
-
+@yield('head')

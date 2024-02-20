@@ -2,7 +2,6 @@
 
 namespace App\Http\Interfaces\Web\Customer\Auth;
 
-use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 
 interface LoginInterface

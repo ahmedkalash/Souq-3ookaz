@@ -4,8 +4,6 @@
 <head>
     @include('customer.layouts.includes.head')
 
-    @yield('head')
-
     @include('customer.layouts.includes.style')
 
 </head>
