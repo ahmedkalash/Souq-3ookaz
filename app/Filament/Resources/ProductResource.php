@@ -58,21 +58,24 @@ class ProductResource extends Resource
                     ])
                     ->columns(),
 
-
                 Forms\Components\Section::make('Product Description')
                     ->schema([
+                        Forms\Components\Section::make('Short Description')
+                            ->schema([
+                                Forms\Components\RichEditor::make('short_description')
+                                    ->maxLength(60000)
+                                    ->disableToolbarButtons(['attachFiles']),
+                            ]),
+
                         Forms\Components\Section::make('Description')
                             ->schema([
-                                Forms\Components\RichEditor::make('description') ,
+                                Forms\Components\RichEditor::make('description')->maxLength(1000000),
                             ]),
 
                     ]) ,
 
-
-
                 Forms\Components\Section::make('Product Images')
                     ->schema([
-
                         SpatieMediaLibraryFileUpload::make('images')
                             ->required()
                             ->multiple()
@@ -81,7 +84,6 @@ class ProductResource extends Resource
                             ->imageEditor()
                             ->openable()
                             ->downloadable(),
-
 
                         SpatieMediaLibraryFileUpload::make('thumbnail')
                             ->required()
@@ -126,6 +128,7 @@ class ProductResource extends Resource
 
                 TextColumn::make('owner_id')->searchable()->sortable()->limit(20)->wrap(),
 
+                TextColumn::make('short_description')->searchable()->sortable()->limit(20)->wrap()->html(),
                 TextColumn::make('description')->searchable()->sortable()->limit(20)->wrap()->html(),
 
                 SpatieMediaLibraryImageColumn::make('thumbnail')->collection('thumbnail'),
@@ -138,7 +141,8 @@ class ProductResource extends Resource
             ->actions([
                 EditAction::make(),
                 DeleteAction::make(),
-                ViewAction::make(),
+                ViewAction::make()
+                    ->slideOver(),
 
             ])
             ->bulkActions([

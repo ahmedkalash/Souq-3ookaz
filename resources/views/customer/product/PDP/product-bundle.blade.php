@@ -38,7 +38,7 @@
                                                 <div>
                                                     <div class="slider-image">
                                                         <img src="{{ $image->getFullUrl() }}"
-                                                             {{($loop->index == 0)? "'id='img-1''": '' }}
+                                                             {{($loop->index == 0)? "'id='img-1'": '' }}
                                                              data-zoom-image="{{ $image->getFullUrl() }}"
                                                              class="img-fluid image_zoom_cls-{{$loop->index}} blur-up lazyload" alt="">
                                                     </div>
@@ -182,7 +182,10 @@
                                      {!! $product->short_description??null !!}
                                 </div>
 
-                               {{-- <div class="product-packege">
+                               {{--
+                                product variants
+
+                               <div class="product-packege">
                                     <div class="product-title">
                                         <h4>Weight</h4>
                                     </div>

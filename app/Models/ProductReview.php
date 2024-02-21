@@ -15,7 +15,6 @@ class ProductReview extends Model
 
     protected $translatable = [];
 
-
     public function product(){
         return $this->belongsTo(Product::class);
     }
@@ -23,7 +22,5 @@ class ProductReview extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
-
-
 
 }
