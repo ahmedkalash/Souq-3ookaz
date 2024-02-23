@@ -2,9 +2,7 @@
 
 namespace App\Filament\Resources\ProductResource\RelationManagers;
 
-use App\Filament\Resources\ProductCategoryResource\Pages\ListProductCategories;
 use App\Models\ProductCategory;
-use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
@@ -18,8 +16,6 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
 class CategoriesRelationManager extends RelationManager
@@ -27,8 +23,6 @@ class CategoriesRelationManager extends RelationManager
     use Translatable;
 
     protected static string $relationship = 'categories';
-
-
 
     public function form(Form $form): Form
     {
@@ -103,13 +97,11 @@ class CategoriesRelationManager extends RelationManager
                         ->limit(20)
                         ->wrap(),
 
-
                     TextColumn::make('slug')
                         ->searchable()
                         ->sortable()
                         ->limit(20)
                         ->wrap(),
-
 
                     TextColumn::make('parent.name')
                         /*** @param ProductCategory $record */
@@ -126,9 +118,7 @@ class CategoriesRelationManager extends RelationManager
                         ->searchable()
                         ->sortable(),
 
-
                     SpatieMediaLibraryImageColumn::make('image'),
-
                 ]
                  )
             ->filters([
@@ -153,9 +143,5 @@ class CategoriesRelationManager extends RelationManager
                 ]),
             ]);
     }
-
-
-
-
 
 }

@@ -94,9 +94,6 @@ class ProductResource extends Resource
 
                 ])->columns(5),
 
-
-
-//
 //                Select::make('categories')
 //                    ->multiple()
 //                    ->relationship('categories', 'name')
@@ -107,9 +104,7 @@ class ProductResource extends Resource
 //                    ->required(),
 //
 
-
-
-            ]) ;
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -117,24 +112,15 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('index')->rowIndex(),
-
                 TextColumn::make('name')->searchable()->sortable()->limit(20)->wrap(),
-
                 TextColumn::make('slug')->searchable()->sortable()->limit(20)->wrap(),
-
                 TextColumn::make('brand')->searchable()->sortable()->limit(20)->wrap(),
-
                 TextColumn::make('price')->searchable()->sortable()->limit(20)->wrap(),
-
                 TextColumn::make('owner_id')->searchable()->sortable()->limit(20)->wrap(),
-
                 TextColumn::make('short_description')->searchable()->sortable()->limit(20)->wrap()->html(),
                 TextColumn::make('description')->searchable()->sortable()->limit(20)->wrap()->html(),
-
                 SpatieMediaLibraryImageColumn::make('thumbnail')->collection('thumbnail'),
-
             ])
-
             ->filters([
                 //
             ])
@@ -157,6 +143,7 @@ class ProductResource extends Resource
             RelationManagers\AttributesRelationManager::class,
             RelationManagers\ReviewsRelationManager::class,
             RelationManagers\CategoriesRelationManager::class,
+            RelationManagers\RelatedProductsRelationManager::class,
         ];
     }
 

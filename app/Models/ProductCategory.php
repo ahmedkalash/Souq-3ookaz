@@ -15,7 +15,6 @@ class ProductCategory extends Model implements HasMedia
 {
     use HasFactory, HasTranslations, InteractsWithMedia, HasRecursiveRelationships, CanGetTableInfoStatically;
 
-
     /**
      * @var array|mixed|string[]
      */
@@ -28,10 +27,6 @@ class ProductCategory extends Model implements HasMedia
         'name'=>'array'
         ];
 
-
-
-
-
     public function parent(){
         return $this->belongsTo(ProductCategory::class,'parent_id');
     }
@@ -40,13 +35,9 @@ class ProductCategory extends Model implements HasMedia
         return $this->belongsTo(ProductCategory::class,'parent_id')->with('recursiveParent');
     }
 
-
-
     public function children(){
         return $this->hasMany(ProductCategory::class,'parent_id');
     }
-
-
 
     public function products(){
         return $this->belongsToMany(
@@ -56,14 +47,4 @@ class ProductCategory extends Model implements HasMedia
             'product_id',
         )->withTimestamps();
     }
-
-
-
-
-
-
-
-
-
-
 }

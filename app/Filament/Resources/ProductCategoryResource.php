@@ -72,7 +72,7 @@ class ProductCategoryResource extends Resource
                 TextInput::make('slug')
                     ->readOnly()
                     ->string()
-                    ->unique(app(static::getModel())->getTable(), 'id' ),
+                    ->unique(app(static::getModel())->getTable(), 'id'),
 
                 TextInput::make('depth')
                     ->label('level')
@@ -96,7 +96,7 @@ class ProductCategoryResource extends Resource
 
                     /*** @var ProductCategory $record*/
                     ->getOptionLabelFromRecordUsing(function (Model $record, $livewire){
-                         return $record->getTranslation('name', $livewire->activeLocale) . ' -- level ' . $record->depth;
+                        return $record->getTranslation('name', $livewire->activeLocale) . ' -- level ' . $record->depth;
                     })
                     ->searchable()
                     ->preload()

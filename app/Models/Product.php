@@ -15,8 +15,7 @@ class Product extends Model implements HasMedia
 
     protected $guarded=[];
 
-    protected $translatable = ['name', 'description', 'brand',   ];
-
+    protected $translatable = ['name', 'description', 'brand'];
 
     public function attributes(){
         return $this->hasMany(ProductAttribute::class);
@@ -36,7 +35,25 @@ class Product extends Model implements HasMedia
             ->withTimestamps();
     }
 
+    public function related_products()
+    {
+        return $this->belongsToMany(
+            static::class,
+            'product_related_products',
+            'product_id',
+            'related_product_id',
+        );
+    }
 
+    public function related_to_products()
+    {
+        return $this->belongsToMany(
+            static::class,
+            'product_related_products',
+            'related_product_id',
+            'product_id',
+        );
+    }
 
 
 
