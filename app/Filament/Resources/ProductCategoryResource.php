@@ -24,10 +24,7 @@ class ProductCategoryResource extends Resource
 
     protected static ?string $model = ProductCategory::class;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-
     public const PREVENT_CYCLE_ERROR_CODE = 45000;
-
 
     public static function form(Form $form): Form
     {
@@ -46,7 +43,6 @@ class ProductCategoryResource extends Resource
         ];
     }
 
-
     public static function getPages(): array
     {
         return [
@@ -56,8 +52,6 @@ class ProductCategoryResource extends Resource
 //            'view' => Pages\ViewProductCategory::route('/{record}'),
         ];
     }
-
-
 
     public static function sharedForm(Form $form){
 
@@ -110,13 +104,8 @@ class ProductCategoryResource extends Resource
                     ),
 
                 SpatieMediaLibraryFileUpload::make('image')->required(),
-
-
             ]);
-
     }
-
-
 
     public static function beforeDelete(){
         return
@@ -128,11 +117,8 @@ class ProductCategoryResource extends Resource
         };
     }
 
-
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()->tree()  ;
     }
-
-
 }

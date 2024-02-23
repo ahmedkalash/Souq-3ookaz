@@ -93,17 +93,6 @@ class ProductResource extends Resource
                             ->downloadable(),
 
                 ])->columns(5),
-
-//                Select::make('categories')
-//                    ->multiple()
-//                    ->relationship('categories', 'name')
-//                    ->getOptionLabelFromRecordUsing(function (Model $record, $livewire){
-//                        return $record->getTranslation('name', $livewire->activeLocale) . ' -- level ' /*. $record->depth*/;
-//                    })
-//                    ->preload()
-//                    ->required(),
-//
-
             ]);
     }
 

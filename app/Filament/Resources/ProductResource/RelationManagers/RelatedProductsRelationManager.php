@@ -6,6 +6,7 @@ use App\Filament\Resources\ProductResource;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -30,6 +31,9 @@ class RelatedProductsRelationManager extends RelationManager
             ->inverseRelationship('related_to_products')
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('brand'),
+                SpatieMediaLibraryImageColumn::make('Image')->collection('thumbnail'),
+                Tables\Columns\TextColumn::make('short_description')->html()->limit(50),
             ])
             ->filters([
                 //
@@ -61,6 +65,7 @@ class RelatedProductsRelationManager extends RelationManager
                     }),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DetachAction::make(),
             ])
