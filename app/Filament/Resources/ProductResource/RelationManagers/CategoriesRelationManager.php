@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ProductResource\RelationManagers;
 
+use App\Filament\Resources\ProductResource;
 use App\Models\ProductCategory;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -42,7 +43,6 @@ class CategoriesRelationManager extends RelationManager
                 TextInput::make('depth')
                     ->label('level')
                     ->disabled()
-                    ->required()
                     ->numeric(),
 
                 Select::make('parent_id')
@@ -53,7 +53,7 @@ class CategoriesRelationManager extends RelationManager
                         function (Builder $query, $record){
                             // if we are in a create form
                             if(! $record){
-                                return  $query->tree();
+                                return $query->tree();
                             }
                             // hide the descendants and the category itself from the choices to avoid cycles in the tree
                             $descendantsAndSelf = ProductCategory::find( $record->id)->descendantsAndSelf()->get()->pluck('id')->toArray();
@@ -78,15 +78,18 @@ class CategoriesRelationManager extends RelationManager
 
                 SpatieMediaLibraryFileUpload::make('image')->required(),
 
-
             ]);
     }
 
     public function table(Table $table): Table
     {
+        $active_local = $table->getLivewire()->getActiveTableLocale() ?? $this->getResource()::getDefaultTranslatableLocale();
+
         return $table
-//            ->modifyQueryUsing(fn (Builder $query) => $query->tree())
-            ->recordTitleAttribute('name')
+            // I used recordTitle(...) function like this way instead of the default recordTitleAttribute(...) cause
+            // when using the recordTitleAttribute(...) the category name is displayed as json and the translation of the name is not handed properly.
+            // May be it is a bug with Filament.
+            ->recordTitle(fn (ProductCategory $record): string => ($record->getTranslation('name', $active_local)))
             ->columns(
                 [
                     TextColumn::make('index')->rowIndex(),
@@ -142,6 +145,16 @@ class CategoriesRelationManager extends RelationManager
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+        // The following line was responsible for printing the level of each category and is commented as it throw error
+        // However it works fine with the ProductCategoryResource table.
+        // May be it is a problem with the package, or it conflicts with something in filament, or may be I am using it the wrong way.
+        // TODO: Find a solution for this problem!
+         // ->modifyQueryUsing(fn (Builder $query) => $query->tree());
+    }
+
+    public function getResource()
+    {
+        return ProductResource::class;
     }
 
 }

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ProductResource\RelationManagers;
 
 use App\Filament\Resources\ProductResource;
+use App\Models\Product;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
@@ -11,6 +12,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Filament\Resources\RelationManagers\Concerns\Translatable;
+use Illuminate\Database\Eloquent\Model;
 
 class RelatedProductsRelationManager extends RelationManager
 {
@@ -18,32 +20,49 @@ class RelatedProductsRelationManager extends RelationManager
 
     protected static string $relationship = 'related_products';
 
+    /**
+     * @param Model $ownerRecord
+     * @param string $pageClass
+     * @return string
+     */
+
     public function form(Form $form): Form
     {
        return ProductResource::form($form);
     }
 
+    public function getResource()
+    {
+        return ProductResource::class;
+    }
     public function table(Table $table): Table
     {
+        $active_local = $table->getLivewire()->getActiveTableLocale() ?? $this->getResource()::getDefaultTranslatableLocale();
+        $limit = Product::RELATED_PRODUCTS_LIMIT;
+        
         return $table
-            ->allowDuplicates(false)
-            ->recordTitleAttribute('name')
+            ->description("Only first {$limit} products will be shown in the PDP")
+            // I used recordTitle(...) function like this way instead of the default recordTitleAttribute(...) cause
+            // when using the recordTitleAttribute(...) the category name is displayed as json and the translation of the name is not handed properly.
+            // May be it is a bug with Filament.
+            ->recordTitle(fn (Product $record): string =>  ($record->getTranslation('name', $active_local)))
             ->inverseRelationship('related_to_products')
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('brand'),
+                Tables\Columns\TextColumn::make('name')->searchable(),
+                Tables\Columns\TextColumn::make('brand')->searchable(),
+                Tables\Columns\TextColumn::make('short_description')->html()->limit(50)->searchable(),
                 SpatieMediaLibraryImageColumn::make('Image')->collection('thumbnail'),
-                Tables\Columns\TextColumn::make('short_description')->html()->limit(50),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()->mutateFormDataUsing(function($data) {
-                    // Todo Duplicate code in CreateProduct Class
-                    $data['owner_type'] = \Auth::user()::class;
-                    $data['owner_id'] = \Auth::user()->id;
-                    return $data;
+                Tables\Actions\CreateAction::make()
+                    ->mutateFormDataUsing(function($data) {
+                        // Todo: Duplicated code in CreateProduct Class
+                        $data['owner_type'] = \Auth::user()::class;
+                        $data['owner_id'] = \Auth::user()->id;
+                        return $data;
                 }),
                 Tables\Actions\AttachAction::make()
                     ->preloadRecordSelect()
@@ -63,6 +82,9 @@ class RelatedProductsRelationManager extends RelationManager
                             ->where('products.id','!=', $livewire->ownerRecord->id)
                             ->whereNotIn('products.id', $attached_products);
                     }),
+
+                Tables\Actions\LocaleSwitcher::make(),
+
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

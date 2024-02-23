@@ -15,7 +15,9 @@ class Product extends Model implements HasMedia
 
     protected $guarded=[];
 
-    protected $translatable = ['name', 'description', 'brand'];
+    protected $translatable = ['name', 'description', 'brand', 'short_description'];
+
+    public const RELATED_PRODUCTS_LIMIT = 10 ;
 
     public function attributes(){
         return $this->hasMany(ProductAttribute::class);
