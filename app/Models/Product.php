@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\CanGetTableInfoStatically;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -12,6 +13,8 @@ use Spatie\Translatable\HasTranslations;
 class Product extends Model implements HasMedia
 {
     use HasFactory, HasTranslations, InteractsWithMedia, CanGetTableInfoStatically;
+
+    protected $appends = [];
 
     protected $guarded=[];
 
@@ -57,6 +60,14 @@ class Product extends Model implements HasMedia
         );
     }
 
+    public static function query()
+    {
+        return parent::query()
+            ->withAvg('reviews', 'rate');
+    }
 
-
+//    public function resolveRouteBindingQuery($query, $value, $field = null){
+//        return parent::resolveRouteBindingQuery($query, $value, $field)
+//            ->withAvg('reviews', 'rate');
+//    }
 }

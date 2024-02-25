@@ -3,16 +3,26 @@
 namespace App\Http\Repositories\Web\Customer;
 use App\Http\Interfaces\Web\Customer\ProductInterface;
 use App\Models\Product;
-
+use Illuminate\Contracts\Database\Eloquent\Builder;
 class ProductRepository implements ProductInterface
 {
     public function view(Product $product)
     {
-        $product->load(['reviews'=>['user'], 'attributes']) ;
-
-
+        $product->load([
+            'reviews' => ['user'],
+            'related_products' => fn (Builder $query) => $query
+                ->with(['categories'=> fn (Builder $query) => $query
+                    ->select('product_categories.id','name')])
+                ->withAvg('reviews', 'rate')
+                ->orderBy('id','asc')
+                ->limit(10) /** only first {10} products will be shown in the related products section*/,
+            'attributes',
+            'categories'
+            ]) ;
 
         $product->gallery = $product->getMedia('gallery');
+
+        $product->thumbnail = $product->getFirstMedia('thumbnail');
 
         $ratings_percentage = [];
 
@@ -27,10 +37,7 @@ class ProductRepository implements ProductInterface
             $count = round(($count/$product->reviews->count()) * 100);
         }
 
-        $average_rating = round($product->reviews->sum('rate') / ( $product->reviews->count()) );
-
         $product->reviews->ratings_percentage = $ratings_percentage;
-        $product->reviews->average_rating = $average_rating;
 
 
         return view('customer.product.PDP.product-bundle', compact('product'));

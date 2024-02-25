@@ -58,7 +58,7 @@ if(!function_exists('render_star_rating')) {
 }
 
 if(!function_exists('render_star_rating_for_front')) {
-     function render_star_rating_for_front(int $rate){
+     function render_star_rating_for_front(int|float $rate){
         $stars='';
         for ($index=1; $index <=5; $index++){
             if($index <= $rate){
