@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Concerns\Translatable;
 use Filament\Resources\Resource;
@@ -50,13 +51,50 @@ class ProductResource extends Resource
                         TextInput::make('brand')
                             ->required()
                             ->string(),
-
-                        TextInput::make('price')
-                            ->required()
-                            ->numeric(),
-
                     ])
                     ->columns(),
+
+                Forms\Components\Section::make('Price')
+                    ->columns()
+                    ->schema([
+                        TextInput::make('price')
+                            ->required()
+                            ->numeric()
+                            ->suffix('$'),
+
+                        Forms\Components\Toggle::make('has_special_price')
+                            ->required()
+                            ->inline(false)
+                            ->live(),
+
+                        Forms\Components\Fieldset::make('Special Price')
+                            ->schema([
+                                Forms\Components\Select::make('special_price_type')
+                                    ->options([
+                                        'fixed'=>'Fixed price',
+                                        'percentage'=>'Percentage of the original price (%)'
+                                    ])
+                                    ->required(fn (Get $get) => $get('has_special_price'))
+                                    ->in(['fixed', 'percentage'])
+                                    ->live(),
+
+                                Forms\Components\TextInput::make('special_price')
+                                    ->required(fn (Get $get) => $get('has_special_price'))
+                                    ->numeric()
+                                    ->regex('/^\d{1,6}(?:\.\d{0,2})?$/')/* up to {6} digits before the dot and up to {2} after it*/
+                                    ->suffix(fn(Get $get) => ($get('special_price_type') == 'fixed')? '$':'%'),
+
+                                Forms\Components\DateTimePicker::make('when_special_price_start')
+                                    ->required(fn (Get $get) => $get('has_special_price'))
+                                    ->before(fn(Get $get) => $get('when_special_price_end')),
+
+                                Forms\Components\DateTimePicker::make('when_special_price_end')
+                                    ->required(fn (Get $get) => $get('has_special_price'))
+                                    ->after(fn(Get $get) => $get('when_special_price_start')),
+                            ])
+                            ->disabled(fn (Get $get) => !$get('has_special_price'))
+                            ->hidden(fn (Get $get) => !$get('has_special_price') ),
+                    ]),
 
                 Forms\Components\Section::make('Product Description')
                     ->schema([
@@ -72,7 +110,7 @@ class ProductResource extends Resource
                                 Forms\Components\RichEditor::make('description')->maxLength(1000000),
                             ]),
 
-                    ]) ,
+                    ]),
 
                 Forms\Components\Section::make('Product Images')
                     ->schema([

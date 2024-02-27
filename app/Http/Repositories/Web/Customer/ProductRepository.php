@@ -39,6 +39,7 @@ class ProductRepository implements ProductInterface
 
         $product->reviews->ratings_percentage = $ratings_percentage;
 
+//        dd($product);
 
         return view('customer.product.PDP.product-bundle', compact('product'));
     }

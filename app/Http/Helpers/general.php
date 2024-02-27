@@ -75,8 +75,3 @@ if(!function_exists('render_star_rating_for_front')) {
             </ul>";
     }
 }
-
-
-
-
-
