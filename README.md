@@ -45,15 +45,25 @@ supported by the online shopping system **till now** along with the user classes
     ▪ Prevent too many fiald login attempts
     ▪ Authentication with google
     ▪ Supports multi-languages
+    ▪ Product description page
+        ▪ Product review and ratings
+        ▪ Product attributes
+        ▪ Product short description
+        ▪ Product long description
+        ▪ Related products in PDP
+        ▪ Product special price if exist
     
 
 ### Admin Side
     ▪ Website settings managment
+    ▪ Website translation managment
     ▪ Can perform CRUD operation for the product categoey 
     ▪ Can perform CRUD operation for the product 
     ▪ Can attach and de-attach product to/from categoey
     ▪ Can perform CRUD operation for the product Attributes
     ▪ Supports multi-languages
+    ▪ Can add a special price to a product
+    ▪ Can add related products to a product
 
     
 
@@ -75,6 +85,4 @@ supported by the online shopping system **till now** along with the user classes
     ▪ I put some trigers on the product_categories table to detect and prevent cycels in the category tree to aviod infinite sql queries
 
 ### Next steps
-    ▪ Multi currency support
-
-    
+    ▪ Short list of attributs
