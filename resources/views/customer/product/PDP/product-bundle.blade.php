@@ -173,7 +173,7 @@
                                     $product_special_price = round($product->price - (($product_special_price_percentage*$product->price)/100.0), 2);
                                 }else{
                                     // then $product->special_price_type=='fixed'
-                                    $product_special_price_percentage = round(100.0*$product->special_price/$product->price, 2);
+                                    $product_special_price_percentage = round(100*($product->price - $product->special_price) / ($product->price==0 ? 100:$product->price), 2);
                                     $product_special_price = $product->special_price;
                                 }
                             }
@@ -190,7 +190,7 @@
                                              {!! $product->has_special_price ?  "($product_special_price_percentage% off)" : '' !!}
                                         </span></h3>
                                     <div class="product-rating custom-rate">
-                                        {!! render_star_rating_for_front(round($product->reviews_avg_rate,2)) !!}
+                                        {!! render_star_rating_for_front(round($product->reviews_avg_rate??0,2)) !!}
 
                                         <span class="review"> {{$product->reviews->count()}} Customer Review</span>
                                     </div>
@@ -312,12 +312,12 @@
 
                                     <div class="product-info">
                                         <ul class="product-info-list product-info-list-2">
-                                            <li>Type : <a href="javascript:void(0)">Black Forest</a></li>
-                                            <li>SKU : <a href="javascript:void(0)">SDFVW65467</a></li>
-                                            <li>MFG : <a href="javascript:void(0)">Jun 4, 2022</a></li>
-                                            <li>Stock : <a href="javascript:void(0)">2 Items Left</a></li>
-                                            <li>Tags : <a href="javascript:void(0)">Cake,</a> <a
-                                                        href="javascript:void(0)">Backery</a></li>
+                                            <li>Type : <a>{{$product->type}}</a></li>
+                                            <li>SKU : <a>{{$product->sku}}</a></li>
+                                            <li>MFG : <a>{{$product->mfg}}</a></li>
+                                            <li>Stock : <a>{{$product->stock}}</a></li>
+{{--                                            <li>Tags : <a>Cake,</a> <a--}}
+{{--                                                        >Backery</a></li>--}}
                                         </ul>
                                     </div>
                                 </div>
@@ -658,9 +658,9 @@
 
                                             <div class="d-flex">
                                                 <div class="product-rating">
-                                                    {!! render_star_rating_for_front(round($product->reviews_avg_rate, 2)) !!}
+                                                    {!! render_star_rating_for_front(round($product->reviews_avg_rate??0, 2)) !!}
                                                 </div>
-                                                <h6 class="ms-3">{{round($product->reviews_avg_rate, 2)}} Out Of 5 </h6>
+                                                <h6 class="ms-3">{{round($product->reviews_avg_rate??0, 2)}} Out Of 5 </h6>
                                             </div>
 
                                             <div class="rating-box">

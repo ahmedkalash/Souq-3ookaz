@@ -6,6 +6,7 @@ use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
 use Filament\Forms;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -37,20 +38,44 @@ class ProductResource extends Resource
                 Forms\Components\Section::make('Basic Information')
                     ->schema([
                         TextInput::make('name')
+                            ->maxLength(255)
                             ->required()
                             ->string()
                             ->live()
                             ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
 
                         TextInput::make('slug')
+                            ->maxLength(255)
                             ->required()
                             ->string()
-                            ->unique(static::getModel()::tableName(), 'id' )
+                            ->unique(ignoreRecord: true)
                             ->mutateDehydratedStateUsing(fn (string $state) => Str::slug($state))->readOnly(),
 
                         TextInput::make('brand')
+                            ->maxLength(255)
                             ->required()
                             ->string(),
+
+                        TextInput::make('type')
+                            ->maxLength(255)
+                            ->required()
+                            ->string(),
+
+                        TextInput::make('sku')
+                            ->maxLength(255)
+                            ->required()
+                            ->string()
+                        ->unique(ignoreRecord: true),
+
+                        DateTimePicker::make('mfg')
+                            ->label('MFG Date')
+                            ->required()
+                            ->date(),
+
+                        TextInput::make('stock')
+                            ->maxValue(2147483647) // Check against the maximum value for an INT column in MySQL
+                            ->required()
+                            ->integer(),
                     ])
                     ->columns(),
 
@@ -58,6 +83,7 @@ class ProductResource extends Resource
                     ->columns()
                     ->schema([
                         TextInput::make('price')
+                            ->maxValue(2147483647) // Check against the maximum value for an INT column in MySQL
                             ->required()
                             ->numeric()
                             ->suffix('$'),

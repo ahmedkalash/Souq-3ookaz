@@ -32,7 +32,8 @@
         "staudenmeir/laravel-adjacency-list": "^1.13",
         "symfony/http-client": "^6.3",
         "symfony/mailgun-mailer": "^6.3",
-        "unlimited/repository-design-pattern-laravel": "^5.5"
+        "unlimited/repository-design-pattern-laravel": "^5.5",
+      "ext-pdo": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.9",
