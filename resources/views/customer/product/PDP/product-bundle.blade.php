@@ -741,48 +741,48 @@
                                                 <h4 class="fw-500">Add a review</h4>
                                             </div>
 
+                                            @if($errors->any())
+                                                <div class="alert alert-danger" role="alert">
+                                                    @foreach($errors->all() as  $key => $error)
+                                                        <li>
+                                                            {{$error}}
+                                                        </li>
+                                                    @endforeach
+                                                </div>
+                                            @endif
+
                                             <div class="row g-4">
-                                                <div class="col-md-6">
-                                                    <div class="form-floating theme-form-floating">
-                                                        <input type="text" class="form-control" id="name"
-                                                               placeholder="Name">
-                                                        <label for="name">Your Name</label>
+                                                <form class="row g-4" method="post" action="{{route('customer.product.storeReview', $product->id)}}">
+                                                    @csrf
+                                                    <div class="col-md-6">
+                                                        <div class="form-floating theme-form-floating">
+                                                            <input type="number" class="form-control" id="review1"
+                                                                   placeholder="Rate" max="5" min="0" name="rate" value="{{$current_user_review?->rate}}" required>
+                                                            <label for="review1">Rate</label>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="col-md-6">
-                                                    <div class="form-floating theme-form-floating">
-                                                        <input type="email" class="form-control" id="email"
-                                                               placeholder="Email Address">
-                                                        <label for="email">Email Address</label>
+                                                    <div class="col-12">
+                                                        <div class="form-floating theme-form-floating">
+                                                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 150px" name="comment">
+                                                            {{$current_user_review?->comment}}
+                                                        </textarea>
+                                                            <label for="floatingTextarea2">Write Your Comment</label>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="col-md-6">
-                                                    <div class="form-floating theme-form-floating">
-                                                        <input type="url" class="form-control" id="website"
-                                                               placeholder="Website">
-                                                        <label for="website">Website</label>
+                                                    <div class="col-12">
+                                                        <div class="form-floating theme-form-floating">
+                                                            <button type="submit" class="btn theme-bg-color text-white">Submit</button>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="col-md-6">
-                                                    <div class="form-floating theme-form-floating">
-                                                        <input type="url" class="form-control" id="review1"
-                                                               placeholder="Give your review a title">
-                                                        <label for="review1">Review Title</label>
-                                                    </div>
-                                                </div>
 
-                                                <div class="col-12">
-                                                    <div class="form-floating theme-form-floating">
-                                                        <textarea class="form-control"
-                                                                  placeholder="Leave a comment here" id="floatingTextarea2"
-                                                                  style="height: 150px"></textarea>
-                                                        <label for="floatingTextarea2">Write Your
-                                                            Comment</label>
-                                                    </div>
-                                                </div>
+
+
+                                                </form>
+
+
                                             </div>
                                         </div>
 

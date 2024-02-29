@@ -3,10 +3,15 @@
 namespace App\Http\Repositories\Web\Customer;
 use App\Http\Interfaces\Web\Customer\ProductInterface;
 use App\Models\Product;
+use App\Models\ProductReview;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use App\Http\Requests\Web\Customer\StoreOrUpdateProductReviewRequest;
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
+
 class ProductRepository implements ProductInterface
 {
-    public function view(Product $product) //
+    public function view(Product $product)
     {
         $product->load([
             'reviews' => fn (Builder $query) => $query
@@ -29,6 +34,10 @@ class ProductRepository implements ProductInterface
             'categories'
             ]) ;
 
+
+        /*** @var ProductReview|null $current_user_review */
+        $current_user_review = $product->reviews->where('user_id', Auth::id())->first();
+
         $product->gallery = $product->getMedia('gallery');
 
         $product->thumbnail = $product->getFirstMedia('thumbnail');
@@ -48,10 +57,35 @@ class ProductRepository implements ProductInterface
 
         $product->reviews->ratings_percentage = $ratings_percentage;
 
-//        dd($product);
-
-        return view('customer.product.PDP.product-bundle', compact('product'));
+        return view(
+            'customer.product.PDP.product-bundle',
+            compact(
+                'product',
+                'current_user_review'
+            )
+        );
     }
+
+    public function storeOrUpdateReview(Product $product, StoreOrUpdateProductReviewRequest $storeOrUpdateProductReviewRequest)
+    {
+        $data = $storeOrUpdateProductReviewRequest->validated();
+        $product->reviews()
+            ->updateOrCreate(
+                [
+                    'user_id' => $data['user_id'],
+                    'product_id' => $data['product_id']
+                ],
+                array_merge(
+                    [
+                        'publishable'=> true,
+                    ],
+                    $data
+                )
+        );
+        Alert::success(__('PDP.alerts.Thank you for your review'))->position();
+        return back();
+    }
+
 
 
 }
