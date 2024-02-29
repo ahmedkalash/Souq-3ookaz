@@ -6,17 +6,26 @@ use App\Models\Product;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 class ProductRepository implements ProductInterface
 {
-    public function view(Product $product)
+    public function view(Product $product) //
     {
         $product->load([
-            'reviews' => ['user'],
+            'reviews' => fn (Builder $query) => $query
+                ->with(['user'])
+                ->where('publishable', true),
+
             'related_products' => fn (Builder $query) => $query
                 ->with(['categories'=> fn (Builder $query) => $query
                     ->select('product_categories.id','name')])
-                ->withAvg('reviews', 'rate')
+                ->withAvg
+                (
+                    ['reviews' => fn($query)=>$query->where('publishable', true)],
+                    'rate'
+                )
                 ->orderBy('id','asc')
-                ->limit(10) /** only first {10} products will be shown in the related products section*/,
+                ->limit(10), /** only first {10} products will be shown in the related products section*/
+
             'attributes',
+
             'categories'
             ]) ;
 
