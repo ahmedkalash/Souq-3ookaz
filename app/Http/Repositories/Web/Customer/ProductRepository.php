@@ -3,22 +3,40 @@
 namespace App\Http\Repositories\Web\Customer;
 use App\Http\Interfaces\Web\Customer\ProductInterface;
 use App\Models\Product;
+use App\Models\ProductReview;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use App\Http\Requests\Web\Customer\StoreOrUpdateProductReviewRequest;
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
+
 class ProductRepository implements ProductInterface
 {
     public function view(Product $product)
     {
         $product->load([
-            'reviews' => ['user'],
+            'reviews' => fn (Builder $query) => $query
+                ->with(['user'])
+                ->where('publishable', true),
+
             'related_products' => fn (Builder $query) => $query
                 ->with(['categories'=> fn (Builder $query) => $query
                     ->select('product_categories.id','name')])
-                ->withAvg('reviews', 'rate')
+                ->withAvg
+                (
+                    ['reviews' => fn($query)=>$query->where('publishable', true)],
+                    'rate'
+                )
                 ->orderBy('id','asc')
-                ->limit(10) /** only first {10} products will be shown in the related products section*/,
+                ->limit(10), /** only first {10} products will be shown in the related products section*/
+
             'attributes',
+
             'categories'
             ]) ;
+
+
+        /*** @var ProductReview|null $current_user_review */
+        $current_user_review = $product->reviews->where('user_id', Auth::id())->first();
 
         $product->gallery = $product->getMedia('gallery');
 
@@ -39,10 +57,35 @@ class ProductRepository implements ProductInterface
 
         $product->reviews->ratings_percentage = $ratings_percentage;
 
-//        dd($product);
-
-        return view('customer.product.PDP.product-bundle', compact('product'));
+        return view(
+            'customer.product.PDP.product-bundle',
+            compact(
+                'product',
+                'current_user_review'
+            )
+        );
     }
+
+    public function storeOrUpdateReview(Product $product, StoreOrUpdateProductReviewRequest $storeOrUpdateProductReviewRequest)
+    {
+        $data = $storeOrUpdateProductReviewRequest->validated();
+        $product->reviews()
+            ->updateOrCreate(
+                [
+                    'user_id' => $data['user_id'],
+                    'product_id' => $data['product_id']
+                ],
+                array_merge(
+                    [
+                        'publishable'=> true,
+                    ],
+                    $data
+                )
+        );
+        Alert::success(__('PDP.alerts.Thank you for your review'))->position();
+        return back();
+    }
+
 
 
 }

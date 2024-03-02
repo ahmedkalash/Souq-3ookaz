@@ -77,6 +77,11 @@ Route::group([
     Route::get('/products/{product:id}',[\App\Http\Controllers\Web\Customer\ProductController::class,'view'])
         ->name('PDP');
 
+    Route::post('/products/{product:id}/reviews',[\App\Http\Controllers\Web\Customer\ProductController::class,
+        'storeOrUpdateReview'
+    ])
+        ->name('product.storeReview');
+
 
 
 

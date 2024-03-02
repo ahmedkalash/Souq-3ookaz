@@ -62,6 +62,12 @@ class Product extends Model implements HasMedia
 
     public function resolveRouteBindingQuery($query, $value, $field = null){
         return parent::resolveRouteBindingQuery($query, $value, $field)
-            ->withAvg('reviews', 'rate');
+            ->withAvg([
+                'reviews' =>
+                    fn($query)=>$query
+                    ->where('publishable', true)
+                ],
+                'rate'
+            );
     }
 }
