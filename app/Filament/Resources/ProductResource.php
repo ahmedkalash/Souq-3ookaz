@@ -140,15 +140,6 @@ class ProductResource extends Resource
 
                 Forms\Components\Section::make('Product Images')
                     ->schema([
-                        SpatieMediaLibraryFileUpload::make('images')
-                            ->required()
-                            ->multiple()
-                            ->collection('gallery')
-                            ->columns(1)
-                            ->imageEditor()
-                            ->openable()
-                            ->downloadable(),
-
                         SpatieMediaLibraryFileUpload::make('thumbnail')
                             ->required()
                             ->collection('thumbnail')
@@ -156,6 +147,14 @@ class ProductResource extends Resource
                             ->openable()
                             ->downloadable(),
 
+                         SpatieMediaLibraryFileUpload::make('gallery')
+                            ->required()
+                            ->multiple()
+                            ->collection('gallery')
+                            ->columns(1)
+                            ->imageEditor()
+                            ->openable()
+                            ->downloadable(),
                 ])->columns(5),
             ]);
     }
@@ -206,6 +205,7 @@ class ProductResource extends Resource
             'index' => Pages\ListProducts::route('/'),
             'create' => Pages\CreateProduct::route('/create'),
             'edit' => Pages\EditProduct::route('/{record}/edit'),
+            'view' => Pages\ViewProduct::route('/{record}/view'),
         ];
     }
 }
