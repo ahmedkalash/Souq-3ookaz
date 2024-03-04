@@ -161,12 +161,14 @@ return [
     | specify a specific custom language line for a given attribute rule.
     |
     */
-
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
     ],
+
+    'no_enough_items_in_stock' => 'No enough items in stock name',
+
 
     /*
     |--------------------------------------------------------------------------

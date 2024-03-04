@@ -269,23 +269,56 @@
 
 
 
+{{--                                @dump($errors )--}}
+
+                                {!! render_validation_errors($errors) !!}
+
+
+
+
+
+
+
+
+{{--                                @if($errors->any())--}}
+{{--                                    <div class="alert alert-danger" role="alert">--}}
+{{--                                        @foreach($errors->all() as $error)--}}
+{{--                                            <li>--}}
+{{--                                                {{$error}}--}}
+{{--                                            </li>--}}
+{{--                                        @endforeach--}}
+{{--                                    </div>--}}
+{{--                                @endif--}}
+
+
+
                                 <div class="note-box product-packege">
                                     <div class="cart_qty qty-box product-qty">
-                                        <div class="input-group">
-                                            <button type="button" class="qty-right-plus" data-type="plus" data-field="">
-                                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                            </button>
-                                            <input class="form-control input-number qty-input" type="text"
-                                                   name="quantity" value="0">
-                                            <button type="button" class="qty-left-minus" data-type="minus"
-                                                    data-field="">
-                                                <i class="fa fa-minus" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
+                                        <form id="add-main-product-to-cart" action="{{route('customer.cart.add')}}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{$product->id}}">
+                                            <div class="input-group">
+                                                <button type="button" class="qty-left-minus" data-type="minus"
+                                                        data-field="">
+                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                </button>
+
+                                                <input class="form-control input-number qty-input" type="text"
+                                                       name="qty" value="0">
+
+                                                <button type="button" class="qty-right-plus" data-type="plus" data-field="">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                </button>
+
+                                            </div>
+                                        </form>
                                     </div>
 
-                                    <button onclick="location.href = 'cart.html';"
-                                            class="btn btn-md bg-dark cart-button text-white w-100">Add To Cart</button>
+                                    <div class="input-group">
+                                        <button form="add-main-product-to-cart" class="btn btn-md bg-dark cart-button text-white w-100" type="submit">Add To Cart</button>
+                                    </div>
+
+
                                 </div>
 
                                 <div class="buy-box">
@@ -894,11 +927,13 @@
                                             <a href="{{route('customer.PDP', $related_product->id)}}">
                                                 <h5 class="name">{{$related_product->name}}</h5>
                                             </a>
+
+
                                             <div class="product-rating mt-2">
                                                 <ul class="rating">
-                                                    {!! render_star_rating_for_front(round($related_product->reviews_avg_rate, 2) ?? 0) !!}
+                                                    {!! render_star_rating_for_front(round($related_product->reviews_avg_rate??0, 2) ?? 0) !!}
                                                 </ul>
-                                                <span>({{round($related_product->reviews_avg_rate, 2) ?? 0}})</span>
+                                                <span>({{round($related_product->reviews_avg_rate??0, 2) ?? 0}})</span>
                                             </div>
 {{--                                            <h6 class="unit">500 G</h6>--}}
                                             <h5 class="price"><span class="theme-color">${{$related_product->price}}</span> {{--<del>$12.57</del>--}}

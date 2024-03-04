@@ -34,7 +34,6 @@ class ProductRepository implements ProductInterface
             'categories'
             ]) ;
 
-
         /*** @var ProductReview|null $current_user_review */
         $current_user_review = $product->reviews->where('user_id', Auth::id())->first();
 
