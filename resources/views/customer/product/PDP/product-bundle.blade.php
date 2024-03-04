@@ -267,30 +267,8 @@
                                     </ul>
                                 </div>
 
-
-
 {{--                                @dump($errors )--}}
-
                                 {!! render_validation_errors($errors) !!}
-
-
-
-
-
-
-
-
-{{--                                @if($errors->any())--}}
-{{--                                    <div class="alert alert-danger" role="alert">--}}
-{{--                                        @foreach($errors->all() as $error)--}}
-{{--                                            <li>--}}
-{{--                                                {{$error}}--}}
-{{--                                            </li>--}}
-{{--                                        @endforeach--}}
-{{--                                    </div>--}}
-{{--                                @endif--}}
-
-
 
                                 <div class="note-box product-packege">
                                     <div class="cart_qty qty-box product-qty">
@@ -774,15 +752,7 @@
                                                 <h4 class="fw-500">Add a review</h4>
                                             </div>
 
-                                            @if($errors->any())
-                                                <div class="alert alert-danger" role="alert">
-                                                    @foreach($errors->all() as  $key => $error)
-                                                        <li>
-                                                            {{$error}}
-                                                        </li>
-                                                    @endforeach
-                                                </div>
-                                            @endif
+                                            {!! render_validation_errors($errors) !!}
 
                                             <div class="row g-4">
                                                 <form class="row g-4" method="post" action="{{route('customer.product.storeReview', $product->id)}}">

@@ -75,3 +75,21 @@ if(!function_exists('render_star_rating_for_front')) {
             </ul>";
     }
 }
+
+if(!function_exists('render_validation_errors')) {
+    function render_validation_errors($errors)
+    {
+        if($errors->any()){
+            $msg = '<ul class="alert alert-danger" role="alert">';
+
+            foreach($errors->all() as $error) {
+                $msg .= "<div>{$error}</div>";
+            }
+
+            $msg .= '</ul>';
+
+            return $msg;
+        }
+        return '';
+    }
+}
