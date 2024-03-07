@@ -9,10 +9,4 @@ trait CanGetTableInfoStatically
     public static function tableName(){
         return (new static())->getTable();
     }
-
-
-
-
-
-
 }

@@ -18,12 +18,13 @@
     @yield('content')
 
 
+    @include('sweetalert::alert')
 
     @include('customer.layouts.includes.footer')
 
     @include('customer.layouts.includes.scripts')
 
-    @include('sweetalert::alert')
+
 
 
 </body>

@@ -21,11 +21,11 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/';
 
     public static function home(){
-        if(Auth::user()->hasRole('super-admin')){
-            return '/admin';
-        }else {
-             return '/';
+        if(!Auth::check() || Auth::user()->roles->empty() || Auth::user()->hasRole('customer')){
+            return '/';
         }
+
+        return '/admin';
     }
 
     /**

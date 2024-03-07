@@ -60,14 +60,12 @@ class User extends Authenticatable  implements HasMedia , FilamentUser, HasName
         'email_verified_at' => 'datetime',
     ];
 
-
     protected function fullName(): Attribute
     {
         return Attribute::make(
             get: fn ($value, $attributes) => $attributes['first_name'].' '.$attributes['last_name'] ,
         );
     }
-
 
     protected function avatar(): Attribute
     {
@@ -78,12 +76,10 @@ class User extends Authenticatable  implements HasMedia , FilamentUser, HasName
         );
     }
 
-
-
-
-
-
-
+    public function cart()
+    {
+        return $this->hasMany(CartItem::class);
+    }
 
     public function canAccessPanel(Panel $panel): bool
     {

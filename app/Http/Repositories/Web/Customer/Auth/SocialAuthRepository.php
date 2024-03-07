@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Http\Repositories\Web\Customer\Auth;
+use App\Http\Interfaces\CartInterface;
 use App\Http\Interfaces\Web\Customer\Auth\SocialAuthInterface;
+use App\Http\Repositories\CartRepository;
 use App\Http\Traits\ThrottleFailedLoginsTrait;
+use App\Models\CartItem;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Hash;
@@ -10,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use Log;
@@ -68,6 +72,7 @@ class SocialAuthRepository implements SocialAuthInterface
                     $app_user->assignRole('customer');
                 });
             } catch (\Throwable $e){
+                Log::error($e);
                 return redirect()->route('customer.showLoginPage')->withErrors(['login_failed'=>"Something Went wrong. Please try again."]);
             }
 
@@ -76,16 +81,20 @@ class SocialAuthRepository implements SocialAuthInterface
 
         }
 
+        $this->handelShoppingCart();
+
         return redirect(RouteServiceProvider::home());
     }
     public function tooManyFailedLoginAttemptsResponse(Request $request){
-
-        return  redirect()->route('customer.showLoginPage')
+        return  redirect()
+            ->route('customer.showLoginPage')
             ->withErrors(['too_many_failed_login_attempts'=>'Too many failed login attempts'])
             ->with('lockup_minutes', round($this->availableAfter($request) / 60.0 ,2))
             ->setStatusCode(Response::HTTP_TOO_MANY_REQUESTS);
-
     }
 
-
+    public function handelShoppingCart()
+    {
+        app(CartInterface::class)::handelShoppingCartAfterLogin();
+    }
 }

@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use App\Http\Interfaces\CartInterface;
 use App\Http\Interfaces\Web\Customer\Auth\LoginInterface;
 use App\Http\Interfaces\Web\Customer\Auth\RegisterInterface;
 use App\Http\Interfaces\Web\Customer\Auth\ResetPasswordInterface;
 use App\Http\Interfaces\Web\Customer\Auth\SocialAuthInterface;
 use App\Http\Interfaces\Web\Customer\ProductInterface;
+use App\Http\Repositories\CartRepository;
 use App\Http\Repositories\Web\Customer\Auth\LoginRepository;
 use App\Http\Repositories\Web\Customer\Auth\RegisterRepository;
 use App\Http\Repositories\Web\Customer\Auth\ResetPasswordRepository;
@@ -28,6 +30,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(SocialAuthInterface::class, SocialAuthRepository::class);
         $this->app->bind(ResetPasswordInterface::class, ResetPasswordRepository::class);
         $this->app->bind(ProductInterface::class, ProductRepository::class);
+        $this->app->bind(CartInterface::class, CartRepository::class);
     }
 
     /**

@@ -60,6 +60,12 @@ class Product extends Model implements HasMedia
         );
     }
 
+    public function cartItem()
+    {
+        return $this->hasMany(CartItem::class)
+            ->where('user_id', \Auth::id());
+    }
+
     public function resolveRouteBindingQuery($query, $value, $field = null){
         return parent::resolveRouteBindingQuery($query, $value, $field)
             ->withAvg([
@@ -70,4 +76,5 @@ class Product extends Model implements HasMedia
                 'rate'
             );
     }
+
 }
