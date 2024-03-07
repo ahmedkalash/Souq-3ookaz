@@ -66,7 +66,7 @@ return [
     |
     */
 
-    'timer' => env('SWEET_ALERT_TIMER', 7000),
+    'timer' => env('SWEET_ALERT_TIMER', 5000),
 
     /*
     |--------------------------------------------------------------------------
@@ -160,7 +160,7 @@ return [
     |
     */
 
-    'show_close_button' => env('SWEET_ALERT_CLOSE_BUTTON', false),
+    'show_close_button' => env('SWEET_ALERT_CLOSE_BUTTON', true),
 
     /*
     |-----------------------------------------------------------------------

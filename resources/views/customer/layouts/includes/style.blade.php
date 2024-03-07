@@ -1,3 +1,4 @@
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.min.css" rel="stylesheet">
 
 <!-- Google font -->
 <link rel="preconnect" href="https://fonts.gstatic.com">

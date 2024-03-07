@@ -5,8 +5,10 @@ namespace App\Http\Repositories;
 use App\Http\Interfaces\CartInterface;
 use App\Models\CartItem;
 use App\Models\Product;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -18,16 +20,26 @@ class CartRepository  implements CartInterface
      * Else If the user is not logged in, then the cart is stored in the session.
      * When the user logs in, the session cart will be moved form session to
      *      the DB by (adding new cart items or updating the {qty} of an existing one).
-     * When the user log add/update a product to the cart (session or DB cart) it is validated against the stock of the product
-     *      except when moving the session cart to the DB so after updating the DB cart with the session cart there may be some
-     *      cart items qty that may exceed the stock of the product. The reason I left if is I was not sure how the error msg will go as a UX.
      * */
 
-
+    const SESSION_CART_KEY = 'user_cart_products_ids';
 
     public function index()
     {
-        //toDo
+        if (Auth::check()) {
+            $cart = CartItem::where('user_id', Auth::id())
+                ->with('product')
+                ->get();
+
+            return view('customer.cart.index', compact('cart'));
+        } else {
+            $session_cart_product_qty = Session::get(static::SESSION_CART_KEY, []);
+
+            $cart = Product::whereIn('id', array_keys($session_cart_product_qty))
+                ->get();
+
+            return view('customer.cart.index', compact('cart', 'session_cart_product_qty'));
+        }
     }
 
     public function addToCart(Request $request)
@@ -48,22 +60,91 @@ class CartRepository  implements CartInterface
             }
         }else{
             /** session cart */
-            $cart = Session::get('user_cart_products_ids', []);
+            $cart = Session::get(static::SESSION_CART_KEY, []);
             if (isset($cart[$request->get('product_id')])) {
                 $cart[$request->get('product_id')] += $request->qty;
             } else {
                 $cart[$request->get('product_id')] = $request->qty;
             }
-            Session::put('user_cart_products_ids', $cart);
+            Session::put(static::SESSION_CART_KEY, $cart);
         }
 
-        Alert::success(__('alerts.product_add_to_cart_successfully'));
-        return back();
+//        Alert::success(__('alerts.product_add_to_cart_successfully'));
+        return [];
     }
+
+    public function increaseQty(Request $request)
+    {
+        $data = $request->validated();
+
+        if(Auth::check()){
+            /** DB cart */
+            CartItem::query()
+                ->updateOrCreate(
+                    [
+                        'product_id' => $data['product_id'],
+                        'user_id' => Auth::id(),
+                    ],
+                    [
+                        'qty' => DB::Raw("cart_items.qty + {$data['qty']}"),
+                    ]
+                );
+
+        }else{
+            /** session cart */
+            $cart = Session::get(static::SESSION_CART_KEY, []);
+            if (isset($cart[$data['product_id']])) {
+                $cart[$data['product_id']] += $data['qty'];
+            } else {
+                $cart[$data['product_id']] = $data['qty'];
+            }
+            Session::put(static::SESSION_CART_KEY, $cart);
+        }
+
+        return [];
+    }
+
+    public function decreaseQty(Request $request){
+        $data = $request->validated();
+
+        if(Auth::check()){
+            /** DB cart */
+            $cart_item = CartItem::query()->where('product_id', $data['product_id'])
+                ->where('user_id' , Auth::id())->first();
+
+            if($cart_item && ($cart_item->qty - $data['qty'] > 0)){
+                $cart_item->qty -= $data['qty'];
+                $cart_item->save();
+            }else{
+                $cart_item?->delete();
+            }
+
+        }else{
+            /** session cart */
+            $cart = Session::get(static::SESSION_CART_KEY, []);
+            if (isset($cart[$data['product_id']]) && ($cart[$data['product_id']] - $data['qty']) > 0 ) {
+                $cart[$data['product_id']] -= $data['qty'];
+            } else {
+                unset($cart[$data['product_id']]);
+            }
+            Session::put(static::SESSION_CART_KEY, $cart);
+        }
+
+        return [];
+    }
+
+    public function deleteItem(Request $request)
+    {
+        return [
+            'deleteItem'
+        ];
+    }
+
+
 
     public static function handelShoppingCartAfterLogin()
     {
-        $session_cart = Session::get('user_cart_products_ids', []);
+        $session_cart = Session::get(static::SESSION_CART_KEY, []);
 
         $session_products_id = array_keys($session_cart);
 
@@ -94,48 +175,9 @@ class CartRepository  implements CartInterface
             $cart_item->save();
         }
 
-        Session::remove('user_cart_products_ids');
+        Session::remove(static::SESSION_CART_KEY);
     }
 
-    public function create()
-    {
-        //toDo
-    }
-
-
-
-    /**
-     * @param $id
-     */
-    public function show($id)
-    {
-
-    }
-
-    /**
-     * @param $id
-     */
-    public function edit($id)
-    {
-
-    }
-
-    /**
-     * @param $request
-     * @param $id
-     */
-    public function update($request, $id)
-    {
-
-    }
-
-    /**
-     * @param $id
-     */
-    public function destroy($id)
-    {
-
-    }
 
 
 }

@@ -41,4 +41,14 @@ class StoreOrUpdateProductReviewRequest extends FormRequest
         );
     }
 
+    public function messages()
+    {
+        return array_merge(
+            parent::messages(),
+            [
+                'user_id' => __('auth.login')
+            ]
+        );
+    }
+
 }

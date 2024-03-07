@@ -4,6 +4,9 @@ namespace App\Http\Controllers;;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Customer\AddProductToCartRequest;
+use App\Http\Requests\Web\Customer\DecreaseCartItmQtyRequest;
+use App\Http\Requests\Web\Customer\IncreaseCartItmQtyRequest;
+use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Interfaces\CartInterface;
@@ -29,14 +32,31 @@ class CartController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param Product $product
+     * @param AddProductToCartRequest $request
      * @return Response
      */
     public function addToCart(AddProductToCartRequest $request)
     {
         return $this->cartInterface->addToCart($request);
     }
+
+    public function increaseQty(IncreaseCartItmQtyRequest $request)
+    {
+        return $this->cartInterface->increaseQty($request);
+    }
+
+    public function decreaseQty(DecreaseCartItmQtyRequest $request)
+    {
+        return $this->cartInterface->decreaseQty($request);
+    }
+
+    public function deleteItem(Request $request)
+    {
+        return $this->cartInterface->deleteItem($request);
+    }
+
+
+
 
     /**
      * Display the specified resource.
@@ -46,7 +66,7 @@ class CartController extends Controller
      */
     public function show($id)
     {
-        return $this->cartInterface->show($id);
+
     }
 
     /**
@@ -57,7 +77,7 @@ class CartController extends Controller
      */
     public function edit($id)
     {
-        return $this->cartInterface->edit($id);
+
     }
 
     /**
@@ -69,7 +89,7 @@ class CartController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return $this->cartInterface->update($request, $id);
+
     }
 
     /**
@@ -80,7 +100,7 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        return $this->cartInterface->destroy($id);
+
     }
 
 }

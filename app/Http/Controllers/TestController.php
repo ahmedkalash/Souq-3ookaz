@@ -6,6 +6,7 @@ use App;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\Web\Customer\Auth\RegisterRepository;
 use App\Mail\EmailVerificationMail;
+use App\Models\CartItem;
 use App\Models\ProductCategory;
 use App\Models\User;
 use Illuminate\Cache\RateLimiter;
@@ -37,11 +38,19 @@ class TestController extends Controller
     public function test( Request $request )
     {
 
-        $cats = ProductCategory::find(3)->products()->get();
-        dump($cats);
+        $res = CartItem::query()
+            ->updateOrCreate(
+                [
+                    'product_id' => 1,
+                    'user_id' =>  3,
+                ],
+                [
+                    'qty' => DB::Raw("cart_items.qty + 5") ,
+                ]
+            )->toRawSql();
 
+        dd($res);
 
-        dd(App\Models\Product::find(11)->categories()->get());
 
 
         /*** @var Collection $cat*/

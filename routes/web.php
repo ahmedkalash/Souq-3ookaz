@@ -78,7 +78,7 @@ Route::group([
     Route::controller(\App\Http\Controllers\Web\Customer\ProductController::class)
         ->group(function (){
             Route::get('/products/{product:id}','view')
-                ->name('PDP');
+                ->name('product.PDP');
             Route::post(
                 '/products/{product:id}/reviews', 'storeOrUpdateReview')
                 ->name('product.storeReview');
@@ -86,8 +86,24 @@ Route::group([
 
     Route::controller(CartController::class)
         ->group(function (){
+            Route::get('/cart', 'index')
+                ->name('cart.index');
+
             Route::post('/cart', 'addToCart')
                 ->name('cart.add');
+
+            Route::post('/cart/increase', 'increaseQty')
+                ->name('cart.increaseQty');
+
+            Route::post('/cart/decrease', 'decreaseQty')
+                ->name('cart.decreaseQty');
+
+            Route::delete('/cart/{product_id}', 'deleteItem')
+                ->name('cart.deleteItem');
+
+
+
+
         });
 
 

@@ -167,7 +167,7 @@ return [
         ],
     ],
 
-    'no_enough_items_in_stock' => 'No enough items in stock name',
+    'no_enough_items_in_stock' => 'No enough items in stock',
 
 
     /*

@@ -4,8 +4,6 @@
     <title>{{__('product-bundle.page title')}} </title>
 @endsection
 
-
-
 @push('style')
     <!-- wow css -->
     <link rel="stylesheet" href="{{asset('frontend')}}/assets/css/animate.min.css" />
@@ -17,6 +15,7 @@
 
     <!-- Iconly css -->
     <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/bulk-style.css">
+
 
 @endpush
 
@@ -226,6 +225,7 @@
                                     </ul>
                                 </div>--}}
 
+{{--
                                 <div class="time deal-timer product-deal-timer mx-md-0 mx-auto" id="clockdiv-1"
                                      data-hours="1" data-minutes="2" data-seconds="3">
                                     <div class="product-title">
@@ -266,41 +266,55 @@
                                         </li>
                                     </ul>
                                 </div>
+--}}
 
-{{--                                @dump($errors )--}}
-                                {!! render_validation_errors($errors) !!}
+
+                                <div id="main-add-to-cart-validation-box" class="" role="alert">
+
+                                </div>
+
 
                                 <div class="note-box product-packege">
                                     <div class="cart_qty qty-box product-qty">
-                                        <form id="add-main-product-to-cart" action="{{route('customer.cart.add')}}" method="post">
-                                            @csrf
-                                            <input type="hidden" name="product_id" value="{{$product->id}}">
+                                        <div id="add-main-product-to-cart">
                                             <div class="input-group">
                                                 <button type="button" class="qty-left-minus" data-type="minus"
                                                         data-field="">
                                                     <i class="fa fa-minus" aria-hidden="true"></i>
                                                 </button>
 
-                                                <input class="form-control input-number qty-input" type="text"
-                                                       name="qty" value="0">
+                                                <input class="form-control input-number qty-input product-{{$product->id}}-cart-qty" type="text"
+                                                       id="main-product-cart-qty" name="qty" value="1">
 
                                                 <button type="button" class="qty-right-plus" data-type="plus" data-field="">
                                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                                 </button>
 
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
 
                                     <div class="input-group">
-                                        <button form="add-main-product-to-cart" class="btn btn-md bg-dark cart-button text-white w-100" type="submit">Add To Cart</button>
+                                        <button id="main-product-add-to-cart-btn" class="btn btn-md bg-dark cart-button text-white w-100 add-to-cart-ajax"
+                                                data-validation-box-id="main-add-to-cart-validation-box"
+                                                data-form="{{json_encode([
+                                                                'action'=> route('customer.cart.add'),
+                                                                'method' =>'post',
+                                                                'input_fields'=> [
+                                                                        '_token'=> csrf_token(),
+                                                                        'product_id'=> $product->id,
+                                                                    ]
+                                                            ])}}"
+                                        >
+                                            {{__('product-bundle.add to cart')}}
+                                        </button>
                                     </div>
 
 
                                 </div>
 
                                 <div class="buy-box">
-                                    <a href="wishlist.html">
+                                   {{-- <a href="wishlist.html">
                                         <i data-feather="heart"></i>
                                         <span>Add To Wishlist</span>
                                     </a>
@@ -308,10 +322,12 @@
                                     <a href="compare.html">
                                         <i data-feather="shuffle"></i>
                                         <span>Add To Compare</span>
-                                    </a>
+                                    </a>--}}
                                 </div>
 
                                 <div class="pickup-box">
+
+                                {{--
                                     <div class="product-title">
                                         <h4>Store Information</h4>
                                     </div>
@@ -320,13 +336,14 @@
                                         <h4 class="text-content">Lollipop cake chocolate chocolate cake dessert jujubes.
                                             Shortbread sugar plum dessert powder cookie sweet brownie.</h4>
                                     </div>
+                                    --}}
 
                                     <div class="product-info">
                                         <ul class="product-info-list product-info-list-2">
-                                            <li>Type : <a>{{$product->type}}</a></li>
-                                            <li>SKU : <a>{{$product->sku}}</a></li>
-                                            <li>MFG : <a>{{$product->mfg}}</a></li>
-                                            <li>Stock : <a>{{$product->stock}}</a></li>
+                                            <li>{{__('product-bundle.type')}} : <a>{{$product->type}}</a></li>
+                                            <li>{{__('product-bundle.sKU')}} : <a>{{$product->sku}}</a></li>
+                                            <li>{{__('product-bundle.mfg')}} : <a>{{$product->mfg}}</a></li>
+                                            <li>{{__('product-bundle.stock')}} : <a>{{$product->stock}}</a></li>
 {{--                                            <li>Tags : <a>Cake,</a> <a--}}
 {{--                                                        >Backery</a></li>--}}
                                         </ul>
@@ -340,31 +357,31 @@
                                     <ul>
                                         <li>
                                             <a href="javascript:void(0)">
-                                                <img src="../assets/images/product/payment/1.svg"
+                                                <img src="{{asset('frontend')}}/assets/images/product/payment/1.svg"
                                                      class="blur-up lazyload" alt="">
                                             </a>
                                         </li>
                                         <li>
                                             <a href="javascript:void(0)">
-                                                <img src="../assets/images/product/payment/2.svg"
+                                                <img src="{{asset('frontend')}}/assets/images/product/payment/2.svg"
                                                      class="blur-up lazyload" alt="">
                                             </a>
                                         </li>
                                         <li>
                                             <a href="javascript:void(0)">
-                                                <img src="../assets/images/product/payment/3.svg"
+                                                <img src="{{asset('frontend')}}/assets/images/product/payment/3.svg"
                                                      class="blur-up lazyload" alt="">
                                             </a>
                                         </li>
                                         <li>
                                             <a href="javascript:void(0)">
-                                                <img src="../assets/images/product/payment/4.svg"
+                                                <img src="{{asset('frontend')}}/assets/images/product/payment/4.svg"
                                                      class="blur-up lazyload" alt="">
                                             </a>
                                         </li>
                                         <li>
                                             <a href="javascript:void(0)">
-                                                <img src="../assets/images/product/payment/5.svg"
+                                                <img src="{{asset('frontend')}}/assets/images/product/payment/5.svg"
                                                      class="blur-up lazyload" alt="">
                                             </a>
                                         </li>
@@ -375,6 +392,7 @@
                     </div>
                 </div>
 
+{{--
                 <div class="col-xxl-3 col-xl-4 col-lg-5 d-none d-lg-block wow fadeInUp">
                     <div class="right-sidebar-box">
                         <div class="vendor-box">
@@ -441,11 +459,14 @@
                         </div>
                     </div>
                 </div>
+--}}
+
             </div>
         </div>
     </section>
     <!-- Product Left Sidebar End -->
 
+{{--
     <!-- Related Product Section Start -->
     <section class="related-product-2">
         <div class="container-fluid-lg">
@@ -576,6 +597,8 @@
         </div>
     </section>
     <!-- Related Product Section End -->
+--}}
+
 
     <!-- Nav Tab Section Start -->
     <section>
@@ -863,7 +886,7 @@
                                 <div class="product-box-3 wow fadeInUp" data-wow-delay="{{$loop->index * 0.5}}s">
                                     <div class="product-header">
                                         <div class="product-image">
-                                            <a href="{{route('customer.PDP', $related_product->id)}}">
+                                            <a href="{{route('customer.product.PDP', $related_product->id)}}">
                                                 <img src="{{$product->thumbnail->getFullUrl()}}"
                                                      class="img-fluid blur-up lazyload" alt="">
                                             </a>
@@ -894,7 +917,7 @@
                                     <div class="product-footer">
                                         <div class="product-detail">
                                             <span class="span-name">{{$related_product->categories->first()->name ?? null}}</span>
-                                            <a href="{{route('customer.PDP', $related_product->id)}}">
+                                            <a href="{{route('customer.product.PDP', $related_product->id)}}">
                                                 <h5 class="name">{{$related_product->name}}</h5>
                                             </a>
 
@@ -908,25 +931,56 @@
 {{--                                            <h6 class="unit">500 G</h6>--}}
                                             <h5 class="price"><span class="theme-color">${{$related_product->price}}</span> {{--<del>$12.57</del>--}}
                                             </h5>
+
+
+{{--
+                                            <button id="main-product-add-to-cart-btn" class="btn theme-bg-color text-white add-to-cart-ajax"
+                                                    data-form="{{json_encode([
+                                                                'action'=> route('customer.cart.add'),
+                                                                'method' =>'post',
+                                                                'input_fields'=> [
+                                                                        '_token'=> csrf_token(),
+                                                                        'product_id'=> $product->id,
+                                                                    ]
+                                                            ])}}"
+                                            >
+                                                Add
+                                            </button>
+--}}
                                             <div class="add-to-cart-box bg-white">
                                                 <button class="btn btn-add-cart addcart-button">Add
                                                     <span class="add-icon bg-light-gray">
                                                     <i class="fa-solid fa-plus"></i>
                                                 </span>
                                                 </button>
-                                                <div class="cart_qty qty-box">
+                                                <div class="cart_qty qty-box" style="display: flex">
                                                     <div class="input-group bg-white">
                                                         <button type="button" class="qty-left-minus bg-gray"
                                                                 data-type="minus" data-field="">
                                                             <i class="fa fa-minus" aria-hidden="true"></i>
                                                         </button>
-                                                        <input class="form-control input-number qty-input" type="text"
-                                                               name="quantity" value="0">
+                                                        <input class="form-control input-number qty-input product-{{$related_product->id}}-cart-qty" type="text"
+                                                               name="qty" value="1">
                                                         <button type="button" class="qty-right-plus bg-gray"
                                                                 data-type="plus" data-field="">
                                                             <i class="fa fa-plus" aria-hidden="true"></i>
                                                         </button>
                                                     </div>
+{{--                                                    <button class="btn theme-bg-color text-white" style="width: 3rem; height: 2.5rem; border-radius: 35px" >Add</button>--}}
+                                                    <button id="main-product-add-to-cart-btn" class="btn theme-bg-color text-white add-to-cart-ajax"
+                                                            style="width: 3rem; height: 2.5rem; border-radius: 35px"
+                                                            data-form="{{json_encode([
+                                                                'action'=> route('customer.cart.add'),
+                                                                'method' =>'post',
+                                                                'input_fields'=> [
+                                                                        '_token'=> csrf_token(),
+                                                                        'product_id'=> $related_product->id,
+                                                                    ]
+                                                            ])}}"
+                                                    >
+                                                        Add
+                                                    </button>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -953,6 +1007,8 @@
     </div>
     <!-- Add to cart Modal End -->
 
+
+{{--
     <!-- Sticky Cart Box Start -->
     <div class="sticky-bottom-cart">
         <div class="container-fluid-lg">
@@ -1001,6 +1057,7 @@
         </div>
     </div>
     <!-- Sticky Cart Box End -->
+--}}
 
 
 
@@ -1041,5 +1098,9 @@
     <!-- WOW js -->
     <script src="{{asset('frontend')}}/assets/js/wow.min.js"></script>
     <script src="{{asset('frontend')}}/assets/js/custom-wow.js"></script>
+
+
+    <script src="{{asset('frontend')}}/assets/js/cart.js"></script>
+
 
 @endpush

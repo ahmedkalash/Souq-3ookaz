@@ -80,13 +80,13 @@ if(!function_exists('render_validation_errors')) {
     function render_validation_errors($errors)
     {
         if($errors->any()){
-            $msg = '<ul class="alert alert-danger" role="alert">';
+            $msg = '<div class="alert alert-danger" role="alert">';
 
             foreach($errors->all() as $error) {
-                $msg .= "<div>{$error}</div>";
+                $msg .= "<div> * {$error}</div>";
             }
 
-            $msg .= '</ul>';
+            $msg .= '</div>';
 
             return $msg;
         }
