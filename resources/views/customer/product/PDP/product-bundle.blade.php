@@ -352,7 +352,7 @@
 
                                 <div class="paymnet-option">
                                     <div class="product-title">
-                                        <h4>Guaranteed Safe Checkout</h4>
+                                        <h4>{{__('product-bundle.guaranteed safe checkout')}}</h4>
                                     </div>
                                     <ul>
                                         <li>
@@ -610,13 +610,15 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
                                         data-bs-target="#description" type="button" role="tab" aria-controls="description"
-                                        aria-selected="true">Description</button>
+                                        aria-selected="true">{{__('product-bundle.description')}}</button>
                             </li>
 
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="info-tab" data-bs-toggle="tab" data-bs-target="#info"
-                                        type="button" role="tab" aria-controls="info" aria-selected="false">Additional
-                                    info</button>
+                                        type="button" role="tab" aria-controls="info" aria-selected="false">
+                                    {{__('product-bundle.additional info')}}
+
+                                </button>
                             </li>
 
                             {{--<li class="nav-item" role="presentation">
@@ -628,7 +630,7 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review"
                                         type="button" role="tab" aria-controls="review"
-                                        aria-selected="false">Review</button>
+                                        aria-selected="false">{{__('product-bundle.review')}}</button>
                             </li>
                         </ul>
 
@@ -687,14 +689,14 @@
                                     <div class="row g-4">
                                         <div class="col-xl-6">
                                             <div class="review-title">
-                                                <h4 class="fw-500">Customer reviews</h4>
+                                                <h4 class="fw-500">{{__('product-bundle.customer reviews')}}</h4>
                                             </div>
 
                                             <div class="d-flex">
                                                 <div class="product-rating">
                                                     {!! render_star_rating_for_front(round($product->reviews_avg_rate??0, 2)) !!}
                                                 </div>
-                                                <h6 class="ms-3">{{round($product->reviews_avg_rate??0, 2)}} Out Of 5 </h6>
+                                                <h6 class="ms-3">{{round($product->reviews_avg_rate??0, 2)}} {{__('product-bundle.out of 5')}}  </h6>
                                             </div>
 
                                             <div class="rating-box">
@@ -703,7 +705,7 @@
 
                                                     <li>
                                                         <div class="rating-list">
-                                                            <h5>5 Star</h5>
+                                                            <h5>{{__('product-bundle.5 stars')}} </h5>
                                                             <div class="progress">
                                                                 <div class="progress-bar" role="progressbar"
                                                                      style="width: {{$product->reviews->ratings_percentage[5]??0}}%" aria-valuenow="100"
@@ -716,7 +718,7 @@
 
                                                     <li>
                                                         <div class="rating-list">
-                                                            <h5>4 Star</h5>
+                                                            <h5>{{__('product-bundle.4 stars')}}</h5>
                                                             <div class="progress">
                                                                 <div class="progress-bar" role="progressbar"
                                                                      style="width: {{$product->reviews->ratings_percentage[4]??0}}%" aria-valuenow="100"
@@ -729,7 +731,7 @@
 
                                                     <li>
                                                         <div class="rating-list">
-                                                            <h5>3 Star</h5>
+                                                            <h5>{{__('product-bundle.3 stars')}}</h5>
                                                             <div class="progress">
                                                                 <div class="progress-bar" role="progressbar"
                                                                      style="width: {{$product->reviews->ratings_percentage[3]??0}}%" aria-valuenow="100"
@@ -742,7 +744,7 @@
 
                                                     <li>
                                                         <div class="rating-list">
-                                                            <h5>2 Star</h5>
+                                                            <h5>{{__('product-bundle.2 stars')}}</h5>
                                                             <div class="progress">
                                                                 <div class="progress-bar" role="progressbar"
                                                                      style="width: {{$product->reviews->ratings_percentage[2]??0}}%" aria-valuenow="100"
@@ -755,7 +757,7 @@
 
                                                     <li>
                                                         <div class="rating-list">
-                                                            <h5>1 Star</h5>
+                                                            <h5>{{__('product-bundle.1 star')}}</h5>
                                                             <div class="progress">
                                                                 <div class="progress-bar" role="progressbar"
                                                                      style="width: {{$product->reviews->ratings_percentage[1]??0}}%" aria-valuenow="100"
@@ -772,7 +774,7 @@
 
                                         <div class="col-xl-6">
                                             <div class="review-title">
-                                                <h4 class="fw-500">Add a review</h4>
+                                                <h4 class="fw-500">{{__('product-bundle.add a review')}}</h4>
                                             </div>
 
                                             {!! render_validation_errors($errors) !!}
@@ -784,7 +786,7 @@
                                                         <div class="form-floating theme-form-floating">
                                                             <input type="number" class="form-control" id="review1"
                                                                    placeholder="Rate" max="5" min="0" name="rate" value="{{$current_user_review?->rate}}" required>
-                                                            <label for="review1">Rate</label>
+                                                            <label for="review1">{{__('product-bundle.rate')}}</label>
                                                         </div>
                                                     </div>
 
@@ -793,13 +795,13 @@
                                                         <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 150px" name="comment">
                                                             {{$current_user_review?->comment}}
                                                         </textarea>
-                                                            <label for="floatingTextarea2">Write Your Comment</label>
+                                                            <label for="floatingTextarea2">{{__('product-bundle.write your comment')}}</label>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-12">
                                                         <div class="form-floating theme-form-floating">
-                                                            <button type="submit" class="btn theme-bg-color text-white">Submit</button>
+                                                            <button type="submit" class="btn theme-bg-color text-white">{{__('product-bundle.submit')}}</button>
                                                         </div>
                                                     </div>
 
@@ -814,7 +816,7 @@
 
                                         <div class="col-12">
                                             <div class="review-title">
-                                                <h4 class="fw-500">Customer questions & answers</h4>
+                                                <h4 class="fw-500">{{__('product-bundle.customer questions & answers')}}</h4>
                                             </div>
 
                                             <div class="review-people">
@@ -871,7 +873,7 @@
     <section class="product-list-section section-b-space">
         <div class="container-fluid-lg">
             <div class="title">
-                <h2>Related Products</h2>
+                <h2>{{__('product-bundle.related products')}}</h2>
                 <span class="title-leaf">
                     <svg class="icon-width">
                         <use xlink:href="{{asset('frontend')}}/assets/svg/leaf.svg#leaf"></use>
@@ -891,6 +893,7 @@
                                                      class="img-fluid blur-up lazyload" alt="">
                                             </a>
 
+                                            {{--
                                             <ul class="product-option">
                                                 <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
                                                     <a href="javascript:void(0)" data-bs-toggle="modal"
@@ -911,6 +914,8 @@
                                                     </a>
                                                 </li>
                                             </ul>
+                                            --}}
+
                                         </div>
                                     </div>
 
@@ -948,7 +953,7 @@
                                             </button>
 --}}
                                             <div class="add-to-cart-box bg-white">
-                                                <button class="btn btn-add-cart addcart-button">Add
+                                                <button class="btn btn-add-cart addcart-button">{{__('product-bundle.add')}}
                                                     <span class="add-icon bg-light-gray">
                                                     <i class="fa-solid fa-plus"></i>
                                                 </span>
@@ -978,7 +983,7 @@
                                                                     ]
                                                             ])}}"
                                                     >
-                                                        Add
+                                                        {{__('product-bundle.add')}}
                                                     </button>
 
                                                 </div>
@@ -1002,7 +1007,7 @@
         </div>
 
         <div class="add-contain">
-            <h6>Added to Cart</h6>
+            <h6>{{__('product-bundle.added to cart')}} </h6>
         </div>
     </div>
     <!-- Add to cart Modal End -->
