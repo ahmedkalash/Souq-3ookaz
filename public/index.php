@@ -1,5 +1,23 @@
 <?php
 
+// the following code is used to allow adding the webhook route to meta business
+//$mode = $_GET['hub_mode'];
+//$challenge= $_GET['hub_challenge'];
+//$token= $_GET['hub_verify_token'];
+//
+//
+//if($mode === "subscribe" && $_GET['hub_verify_token']==='123'){
+//    http_response_code(200);
+//    echo $challenge;
+//
+//
+//}else{
+//    http_response_code(403);
+//}
+//exit();
+//
+
+
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 

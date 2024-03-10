@@ -15,8 +15,84 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/webhook',function (){
+
+});
 
 
+Route::post('/webhook',function (){
+
+// Set the content type header
+    header('Content-Type: application/json');
+
+// Retrieve environment variables
+    $webhook_verify_token = '123';
+    $graph_api_token = 'EAAdrXZAve800BOZBJk0TAKWI7tlbBRqskdUAsGLeZCw8xvQo2H8JmiKRLVyiqZBCAegQ7frXoUcnZA6VUwVKHPlMx4KgMbAq8T71Kxh5AQBGofrSWAHsCyZBUqwaCGj55HI07CtpsoUFropKaKdJC8caaWp2M0Qe12uZCniqoSoOQOeFPcrIrErxm21syxkSGvW5xZAIfpyuCNKYd3lvYXoZD';
+
+
+ //Define the webhook route
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Get the request body
+        $request_body = file_get_contents('php://input');
+        $body = json_decode($request_body);
+        \Illuminate\Support\Facades\Log::info($request_body);
+        // Log incoming messages
+        error_log("Incoming webhook message: " . json_encode($body, JSON_PRETTY_PRINT));
+
+        // Check if the webhook request contains a message
+        $message = $body->entry[0]->changes[0]->value->messages[0] ?? null;
+
+        // Check if the incoming message contains text
+        if ($message && $message->type === "text") {
+            // Extract the business number to send the reply from it
+            $business_phone_number_id = $body->entry[0]->changes[0]->value->metadata->phone_number_id;
+
+            // Send a reply message
+            $data = json_encode([
+                'messaging_product' => 'whatsapp',
+                'to' => $message->from,
+                'text' => ['body' => 'Echo: ' . $message->text->body],
+                'context' => ['message_id' => $message->id],
+            ]);
+
+            $headers = [
+                'Authorization: Bearer ' . $graph_api_token,
+                'Content-Type: application/json',
+            ];
+
+            // Send message
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "https://graph.facebook.com/v18.0/{$business_phone_number_id}/messages");
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($ch);
+            curl_close($ch);
+
+            // Mark incoming message as read
+            $data = json_encode([
+                'messaging_product' => 'whatsapp',
+                'status' => 'read',
+                'message_id' => $message->id,
+            ]);
+
+            // Send read status
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "https://graph.facebook.com/v18.0/{$business_phone_number_id}/messages");
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($ch);
+            curl_close($ch);
+        }
+
+        // Respond with 200 OK
+        http_response_code(200);
+        exit();
+    }
+});
 
 
 
@@ -101,17 +177,9 @@ Route::group([
             Route::delete('/cart/{product_id}', 'deleteItem')
                 ->name('cart.deleteItem');
 
-
-
-
         });
 
-
-
-
 });
-
-
 
 
 
@@ -149,6 +217,3 @@ Route::group([
 
 
 });
-
-
-
