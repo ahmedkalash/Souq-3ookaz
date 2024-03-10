@@ -164,29 +164,16 @@
                         </div>
 
 
-
-                        @php
-                            if($product->has_special_price){
-                                if($product->special_price_type=='percentage'){
-                                    $product_special_price_percentage = $product->special_price;
-                                    $product_special_price = round($product->price - (($product_special_price_percentage*$product->price)/100.0), 2);
-                                }else{
-                                    // then $product->special_price_type=='fixed'
-                                    $product_special_price_percentage = round(100*($product->price - $product->special_price) / ($product->price==0 ? 100:$product->price), 2);
-                                    $product_special_price = $product->special_price;
-                                }
-                            }
-                        @endphp
                         <div class="col-xl-6 wow fadeInUp">
                             <div class="right-box-contain">
-                                {!! $product->has_special_price ?  "<h6 class='offer-top'>$product_special_price_percentage% off</h6>" : '' !!}
+                                {!! $product->isSpecialPriceValid() ?  "<h6 class='offer-top'> {$product->discountPercentage()}% off</h6>" : '' !!}
                                 <h2 class="name">{{ $product->name??null }}</h2>
                                 <div class="price-rating">
                                     <h3 class="theme-color price">
-                                        {!!  $product->has_special_price ? "$$product_special_price <del class='text-content'>$$product->price</del>" : "$$product->price"!!}
+                                        {!!  $product->isSpecialPriceValid() ? "\${$product->specialPriceValue()} <del class='text-content'>$$product->price</del>" : "$$product->price"!!}
 {{--                                        ${{$product->price??null}} <del class="text-content">$58.46</del>--}}
                                         <span class="offer theme-color">
-                                             {!! $product->has_special_price ?  "($product_special_price_percentage% off)" : '' !!}
+                                             {!! $product->isSpecialPriceValid() ?  "({$product->discountPercentage()}% off)" : '' !!}
                                         </span></h3>
                                     <div class="product-rating custom-rate">
                                         {!! render_star_rating_for_front(round($product->reviews_avg_rate??0,2)) !!}
