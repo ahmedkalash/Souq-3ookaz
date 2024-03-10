@@ -27,20 +27,33 @@ class ProductRepository implements ProductInterface
                     'rate'
                 )
                 ->orderBy('id','asc')
-                ->limit(10), /** only first {10} products will be shown in the related products section*/
+                ->limit(10), /** only the first {10} products will be shown in the related products section*/
 
             'attributes',
 
-            'categories'
-            ]) ;
+            'categories',
+
+            'gallery',
+
+            'thumbnail',
+        ]);
 
         /*** @var ProductReview|null $current_user_review */
         $current_user_review = $product->reviews->where('user_id', Auth::id())->first();
 
-        $product->gallery = $product->getMedia('gallery');
+        $product->reviews->ratings_percentage = $this->calculateRatingsPercentage($product);
 
-        $product->thumbnail = $product->getFirstMedia('thumbnail');
+        return view(
+            'customer.product.PDP.product-bundle',
+            compact(
+                'product',
+                'current_user_review'
+            )
+        );
+    }
 
+    public function calculateRatingsPercentage($product)
+    {
         $ratings_percentage = [];
 
         foreach ($product->reviews as $review){
@@ -53,16 +66,7 @@ class ProductRepository implements ProductInterface
         foreach ($ratings_percentage as &$count){
             $count = round(($count/$product->reviews->count()) * 100);
         }
-
-        $product->reviews->ratings_percentage = $ratings_percentage;
-
-        return view(
-            'customer.product.PDP.product-bundle',
-            compact(
-                'product',
-                'current_user_review'
-            )
-        );
+        return $ratings_percentage;
     }
 
     public function storeOrUpdateReview(Product $product, StoreOrUpdateProductReviewRequest $storeOrUpdateProductReviewRequest)
@@ -84,7 +88,4 @@ class ProductRepository implements ProductInterface
         Alert::success(__('PDP.alerts.Thank you for your review'))->position();
         return back();
     }
-
-
-
 }
