@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Translatable\HasTranslations;
 
 class Product extends Model implements HasMedia
@@ -20,7 +21,82 @@ class Product extends Model implements HasMedia
 
     protected $translatable = ['name', 'description', 'brand', 'short_description'];
 
-    public const RELATED_PRODUCTS_LIMIT = 10 ;
+    public const RELATED_PRODUCTS_LIMIT = 10;
+
+    /***
+     * Special price may be
+     *      - fixed price
+     *      - percentage of the original price
+     */
+    public function specialPriceValue()
+    {
+        if(!$this->isSpecialPriceValid()){
+            return null;
+        }
+
+        if($this->special_price_type == 'fixed'){
+            return $this->special_price;
+        }else{
+            // now special_price_type == 'percentage'
+            return round(($this->price/100.0) * $this->special_price, 2) ;
+        }
+    }
+
+    public function specialPricePercentage()
+    {
+        if(!$this->isSpecialPriceValid()){
+            return null;
+        }
+
+        if($this->special_price_type == 'fixed'){
+            if($this->price != 0) {
+                return round(($this->special_price / $this->price) * 100, 2);
+            }
+            return 0;
+        }else{
+            // now special_price_type == 'percentage'
+            return $this->special_price;
+        }
+    }
+
+    public function discountPercentage()
+    {
+        if(!$this->isSpecialPriceValid()){
+            return 0;
+        }
+
+        return 100 - $this->specialPricePercentage();
+    }
+
+    public function isSpecialPriceValid()
+    {
+        if(!$this->has_special_price){
+            return false;
+        }
+
+        $when_special_price_start = Carbon::createFromFormat('Y-m-d H:i:s', $this->when_special_price_start);
+        $when_special_price_end = Carbon::createFromFormat('Y-m-d H:i:s', $this->when_special_price_end);
+
+        if(
+            Carbon::now()->lt($when_special_price_start) ||
+            Carbon::now()->gt($when_special_price_end)
+        ){
+            return false;
+        }
+
+        return true;
+    }
+
+
+    public function gallery(){
+        return $this->morphMany(Media::class, 'model')
+            ->where('collection_name', 'gallery');
+    }
+
+    public function thumbnail(){
+        return $this->morphOne(Media::class, 'model')
+            ->where('collection_name', 'thumbnail');
+    }
 
     public function attributes(){
         return $this->hasMany(ProductAttribute::class);
