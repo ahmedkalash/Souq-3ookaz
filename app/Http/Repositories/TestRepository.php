@@ -2,6 +2,7 @@
 
 namespace App\Http\Repositories;
 
+use App\Models\Product;
 use Unlimited\Repository\Services\BaseEloquentService;
 use App\Http\Interfaces\TestInterface;
 
@@ -11,12 +12,15 @@ class TestRepository extends BaseEloquentService implements TestInterface
 
     public function __construct()
     {
+//        dd(Product::query()->toRawSql());
+//        dd(Product::query()->find(2));
         //$this->instance = $this->getNewInstance();
     }
 
     public function index()
     {
-        //toDo
+//        dd(Product::query()->toRawSql());
+//        dd(Product::find(2));
     }
 
     public function create()

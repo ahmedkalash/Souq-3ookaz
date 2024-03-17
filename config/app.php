@@ -89,6 +89,8 @@ return [
         'ar',
     ],
 
+    'default_currency' => 'USD',
+
 
 
     /*

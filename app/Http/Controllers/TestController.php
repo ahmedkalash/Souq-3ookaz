@@ -9,6 +9,9 @@ use App\Mail\EmailVerificationMail;
 use App\Models\CartItem;
 use App\Models\ProductCategory;
 use App\Models\User;
+use Brick\Math\BigDecimal;
+use CurrencyApi\CurrencyApi\CurrencyApiClient;
+use Decimal\Decimal;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Cache\Repository as Cache;
@@ -26,71 +29,66 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\LaravelSettings\Settings;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
+class a
+{
+    public function __construct()
+    {
+        dd(\session('currency_code'));
+    }
+}
+
 class TestController extends Controller
 {
     public $testInterface;
 
     public function __construct(TestInterface $testInterface , public RateLimiter $rateLimiter)
     {
+
+//        dd('TestController __construct');
+//        dd(\session('currency_code'));
         $this->testInterface = $testInterface;
     }
 
-    public function test( Request $request )
+    public function test( Request $request)
     {
-
-        $res = CartItem::query()
-            ->updateOrCreate(
-                [
-                    'product_id' => 1,
-                    'user_id' =>  3,
-                ],
-                [
-                    'qty' => DB::Raw("cart_items.qty + 5") ,
-                ]
-            )->toRawSql();
-
-        dd($res);
+        $currencyApi = new CurrencyApiClient(env('CURRENCY_API_KEY'));
 
 
+        $decimal = '0.2';
+//        $decimal = 0.2;
+        dump ((1.40 * 165 - 230.0));
+        dump (bcsub(bcmul('1.40','165',50), '230.0', 50));
+        dump (bcmul(bcdiv('1','3', 50), 3,50));
 
-        /*** @var Collection $cat*/
-      $cat = ProductCategory::tree(50);
+        dump ($decimal * 1000000000);
+        dump (623400000.0 - 623399985.58574);
 
-        $constraint = function ($query) {
-            $query->whereNotIn('id', [1,3,4]);
-        };
-
-        $tree = ProductCategory::treeOf($constraint)->get()->totree();
+        dump ('<br>');
+        dump ( (0.2  + 0.2 + 0.2  + 0.2 +   0.2));
 
 
 
-      dd($tree);
+        $i=0.0;
+        $num='0.0';
+        for ( ; $i < 1000000000; $i++){
+            $num = bcadd($num, $decimal,0);
+//            $num += $decimal;
 
-
-
-      $cat = App\Models\ProductCategory::find(80);
-
-       $cat->update([
-                'parent_id'=>84
-            ]);
-
-
-        try {
-            $cat->update([
-                'parent_id'=>84
-            ]);
-        }catch (\Throwable $e){
-            dump($e);
         }
+        echo $num . '<br>';
+
+//        echo 200000000 - 199999997.49084;
+
+//         19999999.962259
+        // 20000000.00000000000000000000
+ //  200000000 - 199999997.49084 = 2.5091600120068
+
+//
 
 
 
-        return view('customer.test');
 
-
-
-
-    //        DB::transaction(function (){
+        //        DB::transaction(function (){
     //            User::create([
     //                'first_name'=>'sghdfgh',
     //                'email'=>'Hkyseduma@mailinator.com123',

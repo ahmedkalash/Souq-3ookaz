@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use App\Http\Repositories\Web\Customer\ProductRepository;
 use App\Models\Traits\CanGetTableInfoStatically;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -87,6 +91,15 @@ class Product extends Model implements HasMedia
         return true;
     }
 
+    public function localisedPrice()
+    {
+        if(!$this->isSpecialPriceValid()){
+            return 0;
+        }
+
+        return 100 - $this->specialPricePercentage();
+    }
+
 
     public function gallery(){
         return $this->morphMany(Media::class, 'model')
@@ -153,4 +166,19 @@ class Product extends Model implements HasMedia
             );
     }
 
+//    public static function query()
+//    {
+//        $locale_currency_code = session('currency_code');
+////        dd($locale_currency_code);
+//        return parent::query()
+//            ->select()
+//            ->selectSub(fn(Builder $query) => $query
+//                ->selectRaw('products.price * currencies.exchange_rate_from_base')
+//                ->from('currencies')
+//                ->where('code','=', $locale_currency_code),
+//                "localised_price"
+//            )
+//            ->selectRaw("'$locale_currency_code' as locale_currency_code");
+//
+//    }
 }

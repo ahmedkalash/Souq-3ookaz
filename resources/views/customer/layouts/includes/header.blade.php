@@ -57,14 +57,16 @@
 
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="select-language">
 
-                                     @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                            <li>
-                                                <a class="dropdown-item" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" id="{{$properties['name']}}">
-                                                    <img src="{{asset('frontend')}}/assets/images/country/{{ $properties['image_name']??null }}"
-                                                         class="img-fluid blur-up lazyload" alt="">
-                                                    <span> {{ $properties['native'] }}</span>
-                                                </a>
-                                            </li>
+                                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                        <li>
+                                            <a class="dropdown-item" hreflang="{{ $localeCode }}"
+                                               href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
+                                               id="{{$properties['name']}}">
+                                                <img src="{{asset('frontend')}}/assets/images/country/{{ $properties['image_name']??null }}"
+                                                     class="img-fluid blur-up lazyload" alt="">
+                                                <span> {{ $properties['native'] }}</span>
+                                            </a>
+                                        </li>
                                     @endforeach
 
 
@@ -75,19 +77,18 @@
                             <div class="dropdown theme-form-select">
                                 <button class="btn dropdown-toggle" type="button" id="select-dollar"
                                         data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span>USD</span>
+                                    <span>{{get_locale_currency_code()}}</span>
                                 </button>
+
                                 <ul class="dropdown-menu dropdown-menu-end sm-dropdown-menu"
                                     aria-labelledby="select-dollar">
-                                    <li>
-                                        <a class="dropdown-item" id="aud" href="javascript:void(0)">AUD</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" id="eur" href="javascript:void(0)">EUR</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" id="cny" href="javascript:void(0)">CNY</a>
-                                    </li>
+                                    @foreach($supported_currencies as $currency)
+                                        <li>
+                                            <a class="dropdown-item" id="aud" href="{{url()->current()."/?currency_code={$currency->code}"}}">{{$currency->code}}</a>
+                                        </li>
+                                    @endforeach
+
+
                                 </ul>
                             </div>
                         </li>
@@ -97,9 +98,6 @@
             </div>
         </div>
     </div>
-
-
-
 
 
     <div class="top-nav top-header sticky-header">
@@ -114,7 +112,8 @@
                                 </span>
                         </button>
                         <a href="index.html" class="web-logo nav-logo">
-                            <img src="{{asset('frontend')}}/assets/images/logo/1.png" class="img-fluid blur-up lazyload" alt="">
+                            <img src="{{asset('frontend')}}/assets/images/logo/1.png" class="img-fluid blur-up lazyload"
+                                 alt="">
                         </a>
 
                         <div class="middle-box">
@@ -279,9 +278,6 @@
             </div>
         </div>
     </div>
-
-
-
 
 
     <div class="container-fluid-lg">
@@ -917,11 +913,11 @@
                                                 <li class="sub-dropdown-hover">
                                                     <a class="dropdown-item" href="javascript:void(0)">Email
                                                         Template <span class="new-text"><i
-                                                                class="fa-solid fa-bolt-lightning"></i></span></a>
+                                                                    class="fa-solid fa-bolt-lightning"></i></span></a>
                                                     <ul class="sub-menu">
                                                         <li>
                                                             <a
-                                                                href="../email-templete/abandonment-email.html">Abandonment</a>
+                                                                    href="../email-templete/abandonment-email.html">Abandonment</a>
                                                         </li>
                                                         <li>
                                                             <a href="../email-templete/offer-template.html">Offer
@@ -944,7 +940,7 @@
                                                 <li class="sub-dropdown-hover">
                                                     <a class="dropdown-item" href="javascript:void(0)">Invoice
                                                         Template <span class="new-text"><i
-                                                                class="fa-solid fa-bolt-lightning"></i></span></a>
+                                                                    class="fa-solid fa-bolt-lightning"></i></span></a>
                                                     <ul class="sub-menu">
                                                         <li>
                                                             <a href="../invoice/invoice-1.html">Invoice 1</a>

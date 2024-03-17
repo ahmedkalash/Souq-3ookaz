@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Web\Customer\Auth\ResetPasswordController;
+use App\Http\Middleware\SetCurrencyMiddleware;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 

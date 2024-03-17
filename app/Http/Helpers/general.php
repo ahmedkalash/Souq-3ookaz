@@ -93,3 +93,21 @@ if(!function_exists('render_validation_errors')) {
         return '';
     }
 }
+
+if(!function_exists('get_locale_currency_code')) {
+    function get_locale_currency_code()
+    {
+      return session(
+          'currency_code',
+          config('app.default_currency')
+      );
+    }
+}
+
+if(!function_exists('localize_price')) {
+    function localize_price(float|int $price)
+    {
+       return \App\Services\ProductPriceService::localizePrice($price);
+    }
+}
+
