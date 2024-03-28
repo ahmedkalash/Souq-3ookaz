@@ -4,9 +4,11 @@ namespace App\Http\Middleware;
 
 use App\Models\Currency;
 use App\Services\ProductPriceService;
+use Cknow\Money\Money;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use RealRashid\SweetAlert\Facades\Alert;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -24,7 +26,7 @@ class SetCurrencyMiddleware
                 Session::put('currency_code', $request->get('currency_code'));
             }
         }
-
+        Money::setLocale(app()->getLocale());
         ProductPriceService::loadSessionLocaleCurrency();
 
         return $next($request);

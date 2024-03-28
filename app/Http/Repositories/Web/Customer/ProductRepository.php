@@ -6,12 +6,16 @@ use App\Models\Currency;
 use App\Models\Product;
 use App\Models\ProductReview;
 use App\Services\ProductPriceService;
+use Cknow\Money\Formatters\CurrencySymbolMoneyFormatter;
+use Cknow\Money\Money;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use App\Http\Requests\Web\Customer\StoreOrUpdateProductReviewRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Money\Calculator\BcMathCalculator;
 use RealRashid\SweetAlert\Facades\Alert;
+use Swap\Laravel\Facades\Swap;
 
 
 class ProductRepository implements ProductInterface
@@ -19,18 +23,32 @@ class ProductRepository implements ProductInterface
     protected ProductPriceService $productPriceService;
     public const CURRENCY_CODE_QUERY_STRING = 'currency_code';
 
+    public static $baseToLocalExchangeRate = null;
+
     public function __construct()
     {
-//        $this->productPriceService = app(ProductPriceService::class, [
-//                'currencyModel' => Currency::class,
-//                'eagerLoadCurrencies' => [ProductPriceService::localeCurrencyCode()]
-//        ]);
-//        $this->productPriceService->loadSessionLocaleCurrency();
+
+    }
+
+    public static function getBaseToLocalExchangeRate(): \Exchanger\Contract\ExchangeRate
+    {
+        if(is_null(static::$baseToLocalExchangeRate)){
+            $base_currency = config('app.default_currency');
+            $locale_currency =  \session('currency_code', $base_currency);
+            static::$baseToLocalExchangeRate = Swap::latest($base_currency. '/' . $locale_currency);
+        }
+        return static::$baseToLocalExchangeRate;
+    }
+
+    public function localizeMoney(Money $money)
+    {
+        $exchangeRate = (string)static::getBaseToLocalExchangeRate()->getValue()  ;
+        $converted_price = $money->multiply($exchangeRate)->getAmount();
+        return new Money( $converted_price , session('currency_code',config('app.default_locale')));
     }
 
     public function view(Product $product)
     {
-
         $product->load([
             'reviews' => fn (Builder $query) => $query
                 ->with(['user'])
@@ -57,10 +75,15 @@ class ProductRepository implements ProductInterface
         ]);
 
         /*** @var ProductReview|null $current_user_review */
-        $current_user_review = $product->reviews->where('user_id', Auth::id())->first();
+        $current_user_review = $product->reviews->firstWhere('user_id', Auth::id());
 
         $product->reviews->ratings_percentage = $this->calculateRatingsPercentage($product);
-         (ProductPriceService::getLocaleCurrency());
+
+        $product->price = $this->localizeMoney($product->price);
+
+        foreach ($product->related_products as &$related_product){
+            $related_product->price =  $this->localizeMoney($related_product->price);
+        }
 
         return view(
             'customer.product.PDP.product-bundle',
@@ -68,7 +91,6 @@ class ProductRepository implements ProductInterface
                 'product',
                 'current_user_review',
             ),
-//            ['productPriceService'=> $this->productPriceService]
         );
     }
 

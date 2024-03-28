@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Carbon\Carbon;
+use Cknow\Money\Money;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
@@ -23,6 +24,7 @@ class SetLocalesMidllware
 
         URL::defaults(['locale' => $request->segment(1)]); // <-- Set the URL defaults
         // (for named routes we won't have to specify the locale each time!)
+
 
         return $next($request);
     }

@@ -6,7 +6,10 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "ext-bcmath": "*",
+        "ext-intl": "*",
         "ext-pdo": "*",
+        "cknow/laravel-money": "^8.0",
         "everapi/currencyapi-php": "^1.0",
         "filament/actions": "^3.0-stable",
         "filament/filament": "^3.0-stable",
@@ -17,6 +20,7 @@
         "filament/spatie-laravel-settings-plugin": "^3.0-stable",
         "filament/spatie-laravel-translatable-plugin": "^3.0-stable",
         "filament/widgets": "^3.0-stable",
+        "florianv/laravel-swap": "^2.3",
         "guzzlehttp/guzzle": "^7.2",
         "ibrahimbougaoua/filament-rating-star": "^0.0.1",
         "kenepa/translation-manager": "^4.0",
@@ -25,6 +29,10 @@
         "laravel/socialite": "^5.9",
         "laravel/tinker": "^2.7",
         "mcamara/laravel-localization": "^1.8",
+        "moneyphp/money": "^4.5",
+        "nyholm/psr7": "^1.8",
+        "php-http/curl-client": "^2.3",
+        "php-http/message": "^1.16",
         "realrashid/sweet-alert": "^7.1",
         "spatie/laravel-medialibrary": "^10.0.0",
         "spatie/laravel-permission": "^5.10",
@@ -34,8 +42,7 @@
         "staudenmeir/laravel-adjacency-list": "^1.13",
         "symfony/http-client": "^6.3",
         "symfony/mailgun-mailer": "^6.3",
-        "unlimited/repository-design-pattern-laravel": "^5.5",
-      "ext-bcmath": "*"
+        "unlimited/repository-design-pattern-laravel": "^5.5"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.9",
@@ -90,7 +97,8 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
         }
     },
     "minimum-stability": "stable",

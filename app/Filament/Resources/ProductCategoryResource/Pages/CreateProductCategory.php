@@ -8,7 +8,6 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 
 
 class CreateProductCategory extends CreateRecord
@@ -18,7 +17,6 @@ class CreateProductCategory extends CreateRecord
     }
 
     protected static string $resource = ProductCategoryResource::class;
-
 
     protected function getHeaderActions(): array
     {

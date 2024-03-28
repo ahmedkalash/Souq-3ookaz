@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Http\Repositories\Web\Customer\ProductRepository;
 use App\Models\Traits\CanGetTableInfoStatically;
 use Carbon\Carbon;
+use Cknow\Money\Casts\MoneyDecimalCast;
+use Cknow\Money\Casts\MoneyIntegerCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
@@ -25,6 +27,12 @@ class Product extends Model implements HasMedia
 
     protected $translatable = ['name', 'description', 'brand', 'short_description'];
 
+    protected $casts = [
+        'price' => MoneyIntegerCast::class,
+        'when_special_price_start' => 'datetime',
+        'when_special_price_end' => 'datetime',
+    ];
+
     public const RELATED_PRODUCTS_LIMIT = 10;
 
     /***
@@ -39,22 +47,24 @@ class Product extends Model implements HasMedia
         }
 
         if($this->special_price_type == 'fixed'){
-            return $this->special_price;
+            return localize_money(money("$this->special_price", config('app.default_currency')));
         }else{
             // now special_price_type == 'percentage'
-            return round(($this->price/100.0) * $this->special_price, 2) ;
+            $percentage = bcdiv("$this->special_price", '100',14);
+            return $this->price->multiply($percentage);
         }
     }
 
-    public function specialPricePercentage()
+    public function specialPricePercentage():?string
     {
         if(!$this->isSpecialPriceValid()){
             return null;
         }
 
         if($this->special_price_type == 'fixed'){
-            if($this->price != 0) {
-                return round(($this->special_price / $this->price) * 100, 2);
+            if(!$this->price->isZero()) {
+                $special_price = money("$this->special_price", config('app.default_currency'));
+                return bcmul($special_price->ratioOf($this->getOriginal('price')), '100',2);
             }
             return 0;
         }else{
@@ -63,13 +73,13 @@ class Product extends Model implements HasMedia
         }
     }
 
-    public function discountPercentage()
+    public function discountPercentage():string
     {
         if(!$this->isSpecialPriceValid()){
             return 0;
         }
 
-        return 100 - $this->specialPricePercentage();
+        return bcsub('100' , $this->specialPricePercentage());
     }
 
     public function isSpecialPriceValid()
@@ -78,28 +88,15 @@ class Product extends Model implements HasMedia
             return false;
         }
 
-        $when_special_price_start = Carbon::createFromFormat('Y-m-d H:i:s', $this->when_special_price_start);
-        $when_special_price_end = Carbon::createFromFormat('Y-m-d H:i:s', $this->when_special_price_end);
-
         if(
-            Carbon::now()->lt($when_special_price_start) ||
-            Carbon::now()->gt($when_special_price_end)
+            Carbon::now()->lt($this->when_special_price_start) ||
+            Carbon::now()->gt($this->when_special_price_end)
         ){
             return false;
         }
 
         return true;
     }
-
-    public function localisedPrice()
-    {
-        if(!$this->isSpecialPriceValid()){
-            return 0;
-        }
-
-        return 100 - $this->specialPricePercentage();
-    }
-
 
     public function gallery(){
         return $this->morphMany(Media::class, 'model')

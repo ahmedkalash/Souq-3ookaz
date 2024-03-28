@@ -164,9 +164,7 @@
                             </div>
                         </div>
 
-                        @php
-                            $localeCurrencySymbol = ProductPriceService::getLocaleCurrency()->symbol;
-                        @endphp
+
 
                         <div class="col-xl-6 wow fadeInUp">
                             <div class="right-box-contain">
@@ -174,10 +172,10 @@
                                 <h2 class="name">{{ $product->name??null }}</h2>
                                 <div class="price-rating">
                                     <h3 class="theme-color price">
-                                        {!!
+                                         {!!
                                             $product->isSpecialPriceValid() ?
-                                            $localeCurrencySymbol .' '. localize_price($product->specialPriceValue())['price']  . ' '."<del class='text-content'>" . $localeCurrencySymbol .' '. localize_price($product->price)['price'] . "</del>" :
-                                            ($localeCurrencySymbol .' '. localize_price($product->price)['price'])
+                                            $product->specialPriceValue()  . ' '."<del class='text-content'>" . $product->price . "</del>" :
+                                            $product->price
                                         !!}
                                         {{--                                        ${{$product->price??null}} <del class="text-content">$58.46</del>--}}
                                         <span class="offer theme-color">
@@ -943,8 +941,8 @@
                                             <h5 class="price">
                                             {!!
                                                 $related_product->isSpecialPriceValid() ?
-                                                '<span class="theme-color">' . $localeCurrencySymbol .' '. localize_price($related_product->specialPriceValue())['price']. '</span>'  . ' '."<del>" . $localeCurrencySymbol .' '. localize_price($related_product->price)['price'] . "</del>" :
-                                                '<span class="theme-color">' . ($localeCurrencySymbol .' '. localize_price($related_product->price)['price']) . '</span>'
+                                                '<span class="theme-color">' . $related_product->specialPriceValue() . '</span>'  . ' '."<del>" . $related_product->price . "</del>" :
+                                                '<span class="theme-color">' . $related_product->price . '</span>'
                                             !!}
 
 

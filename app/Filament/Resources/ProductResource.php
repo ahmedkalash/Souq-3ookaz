@@ -84,6 +84,7 @@ class ProductResource extends Resource
                     ->schema([
                         TextInput::make('price')
                             ->maxValue(2147483647) // Check against the maximum value for an INT column in MySQL
+                            ->rules(['decimal:0,2'])
                             ->required()
                             ->numeric()
                             ->suffix('$'),

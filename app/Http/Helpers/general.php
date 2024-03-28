@@ -1,6 +1,10 @@
 <?php
 
 
+use App\Http\Repositories\Web\Customer\ProductRepository;
+use Cknow\Money\Money;
+use Money\Calculator\BcMathCalculator;
+
 if(!function_exists('translate')){
     function translate(?string $value): ?string
     {
@@ -104,10 +108,10 @@ if(!function_exists('get_locale_currency_code')) {
     }
 }
 
-if(!function_exists('localize_price')) {
-    function localize_price(float|int $price)
+if(!function_exists('localize_money')) {
+    function localize_money(\Cknow\Money\Money|\Money\Money $money)
     {
-       return \App\Services\ProductPriceService::localizePrice($price);
+        return app(ProductRepository::class)->localizeMoney($money);
     }
 }
 

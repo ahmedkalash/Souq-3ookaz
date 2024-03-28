@@ -3,31 +3,19 @@
 namespace App\Http\Controllers;
 
 use App;
-use App\Http\Controllers\Controller;
-use App\Http\Repositories\Web\Customer\Auth\RegisterRepository;
-use App\Mail\EmailVerificationMail;
-use App\Models\CartItem;
-use App\Models\ProductCategory;
 use App\Models\User;
-use Brick\Math\BigDecimal;
+
 use CurrencyApi\CurrencyApi\CurrencyApiClient;
-use Decimal\Decimal;
 use Illuminate\Cache\RateLimiter;
-use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Contracts\Cache\Repository as Cache;
-use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use App\Http\Interfaces\TestInterface;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
-use RealRashid\SweetAlert\Facades\Alert;
-use Spatie\LaravelSettings\Settings;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
+ use Money\Currencies\ISOCurrencies;
+use Money\Currency;
+
+use Money\Money;
+use Cknow\Money\Money as CknowMoney;
+use Swap\Laravel\Facades\Swap;
+
 
 class a
 {
@@ -53,29 +41,82 @@ class TestController extends Controller
     {
         $currencyApi = new CurrencyApiClient(env('CURRENCY_API_KEY'));
 
+        // Get the latest EUR/USD rate
 
-        $decimal = '0.2';
-//        $decimal = 0.2;
-        dump ((1.40 * 165 - 230.0));
-        dump (bcsub(bcmul('1.40','165',50), '230.0', 50));
-        dump (bcmul(bcdiv('1','3', 50), 3,50));
+//        $price = CknowMoney::EGP(500);
+//
+//        print_r($price); // $5.00
+//        dump($price->allocate([20,50-20])); // $5.00
+//        dump($price->ratioOf(CknowMoney::EGP(300))); // $5.00
+//        dump(bcmul($price->ratioOf(CknowMoney::EGP(300)), '100',2));
+//        dump(CknowMoney::getLocale());
+//        dump(CknowMoney::USD(500) ); // $5.00
+//        dump(CknowMoney::USD(500, true)); // $500.00 force decimals
 
-        dump ($decimal * 1000000000);
-        dump (623400000.0 - 623399985.58574);
+//        dump(App\Models\Product::find(4)->price);
 
-        dump ('<br>');
-        dump ( (0.2  + 0.2 + 0.2  + 0.2 +   0.2));
+//        $p = App\Models\Product::create([
+//            'name'=>'1',
+//            'brand'=>'1',
+//            'owner_type'=>'admin',
+//            'slug'=>'1',
+//            'price'=> new Money('10000', new Currency('USD')),
+//            'owner_id'=>'1',
+//            'has_special_price'=> 0,
+//            'type'=>'1',
+//            'sku'=>'1453',
+//            'mfg'=>now(),
+//            'stock'=>45,
+//        ]);
+//
+//    dump($p->price);
+
+//        $rate = Swap::latest('USD/EGP');
+//
+//         dump($rate);
+//
+//        // 1.129
+//        dump($rate->getValue());
+//
+//        // 2016-08-26
+//            dump($price->multiply((string)$rate->getValue()));
+
+        // Get the EUR/USD rate yesterday
+//                $rate = Swap::historical('EUR/USD', Carbon\Carbon::yesterday());
 
 
 
-        $i=0.0;
-        $num='0.0';
-        for ( ; $i < 1000000000; $i++){
-            $num = bcadd($num, $decimal,0);
-//            $num += $decimal;
+//        $swap = (new \Swap\Swap(new ExchangeRatesApi([
+//            ExchangeRatesApi::ACCESS_KEY_OPTION => 'cur_live_9USbGGTr1wsVCRv3OfwqlDn538STm2wi8PVsrgD2'
+//        ])));
+//        $exchange = new SwapExchange($swap);
+//
+//        $converter = new Converter(new ISOCurrencies(), $exchange);
+//        $eur100 = Money::EUR(100);
+//        $usd125 = $converter->convert($eur100, new Currency('USD'));
 
-        }
-        echo $num . '<br>';
+//        $decimal = '0.2';
+////        $decimal = 0.2;
+//        dump ((1.40 * 165 - 230.0));
+//        dump (bcsub(bcmul('1.40','165',50), '230.0', 50));
+//        dump (bcmul(bcdiv('1','3', 50), 3,50));
+//
+//        dump ($decimal * 1000000000);
+//        dump (623400000.0 - 623399985.58574);
+//
+//        dump ('<br>');
+//        dump ( (0.2  + 0.2 + 0.2  + 0.2 +   0.2));
+//
+
+
+//        $i=0.0;
+//        $num='0.0';
+//        for ( ; $i < 1000000000; $i++){
+//            $num = bcadd($num, $decimal,0);
+////            $num += $decimal;
+//
+//        }
+//        echo $num . '<br>';
 
 //        echo 200000000 - 199999997.49084;
 
